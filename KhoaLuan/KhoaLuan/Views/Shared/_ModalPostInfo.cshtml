@@ -1,0 +1,100 @@
+﻿<!-- Modal Thong tin bai viet -->
+<div class="modal fade" id="modalPostInfo" tabindex="-1" role="dialog" style="padding-left: 0px;">
+	<div class="modal-dialog" role="document" style="width: 100%; max-width: 1024px; margin: 3px auto;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Thông tin bài đăng</h5>
+				<button type="button" id="closeModalPostInfo" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body p-0">
+				<div class="row">
+					<div class="col-sm-12 col-md-6 pt-1 pb-1 pl-3">
+						<table class="table table-bordered mb-0">
+							<tbody>
+								<tr>
+									<td class="field">Tiêu đề :</td>
+									<td id="titleModal">Cho thuê phòng trọ giá rẻ</td>
+								</tr>
+								<tr>
+									<td class="field">Thời điểm đăng :</td>
+									<td id="postDayModal">22/2/2018</td>
+								</tr>
+								<tr>
+									<td class="field">Địa chỉ :</td>
+									<td id="addressModal">214 Trần Đại Nghĩa, Đà Nẵng</td>
+								</tr>
+								<tr>
+									<td class="field">Diện tích :</td>
+									<td id="acreageModal">20 m<sup>2</sup></td>
+								</tr>
+								<tr>
+									<td class="field">Giá thuê :</td>
+									<td id="priceModal">1.500.000 VND</td>
+								</tr>
+								<tr>
+									<td class="field">Tiện nghi :</td>
+									<td id="showCriteria"></td>
+								</tr>
+								<tr>
+									<td class="field">Mô tả :</td>
+									<td id="descriptionModal">Phòng trọ rộng rãi, thoáng mát, an ninh tốt, gần khu đô thị.</td>
+								</tr>
+								<tr>
+									<td class="field">Số người tối đa :</td>
+									<td id="maxPeopleModal">3 người</td>
+								</tr>
+								<tr>
+									<td class="field">Người đăng :</td>
+									<td id="nameModal">PhucTD5</td>
+								</tr>
+								<tr>
+									<td class="field">Số điện thoại :</td>
+									<td id="phoneModal">0946901161</td>
+								</tr>
+								<tr>
+									<td class="field">Email :</td>
+									<td id="emailModal">trandaiphuc.1501@gmail.com</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-sm-12 col-md-6 d-flex align-items-center">
+						<div id="carouselId" class="carousel slide pr-sm-0 pr-md-4" data-ride="carousel">
+							<ol class="carousel-indicators">
+								@* indicators will show here *@
+							</ol>
+							<div class="carousel-inner my-article" style="width: 80%; height: 80%" role="listbox">
+								@* images will show here *@
+							</div>
+							<a class="carousel-control-prev" href="#carouselId" role="button" data-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="carousel-control-next" href="#carouselId" role="button" data-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-sm btn-danger" title="Xóa bài viết này"
+						data-toggle="modal" data-target="#modalSendMessage"
+						data-dismiss="modal" id="btnDeletePost">
+					Xóa
+				</button>
+				<button type="button" post-id="" id="btnDissApproval" title="Bỏ phê duyệt bài viết này"
+						class="btn btn-sm btn-danger w-25 ml-3" style="display: none;">
+					Bỏ phê duyệt
+				</button>
+				<button type="button" post-id="" id="btnApproval" title="Phê duyệt bài viết này"
+						class="btn btn-sm btn-primary w-25 ml-3">
+					Phê duyệt
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

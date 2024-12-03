@@ -1,0 +1,185 @@
+﻿@model KhoaLuan.ViewModels.ChangeInfoModel
+
+@using KhoaLuan.Models;
+@{
+	Account ac = (Session["account"] as Account);
+	ViewBag.Title = "Thông tin cá nhân";
+	if (ac.Role == 0)
+	{
+		ViewBag.PageIndex = 4;
+		Layout = "~/Views/Shared/AdminLayout.cshtml";
+	}
+	else if(ac.Role == 1)
+	{
+		ViewBag.PageIndex = 4;
+		Layout = "~/Views/Shared/UserLayout.cshtml";
+	}
+	else
+	{
+		ViewBag.PageIndex = 0;
+		Layout = "~/Views/Shared/UserLayout2.cshtml";
+	}
+
+}
+
+<style>
+	.form-control[readonly] {
+		background-color: #d8e9fb;
+	}
+
+	.form-control {
+		border: none;
+	}
+
+	.my-form-control-error {
+		border: solid 1px red;
+	}
+
+	.my-form-control {
+		border: solid 1px black;
+	}
+</style>
+
+<div class="mdk-header-layout__content top-navbar mdk-header-layout__content--scrollable h-100"
+	 style="padding-bottom: 65px;">
+	<div class="container-fluid">
+		<center>
+			<h3 style="margin-top: 20px">Thông Tin Cá Nhân</h3>
+		</center>
+		<br>
+		<div class="container card shadow" style="max-width: 600px; padding: 15px;">
+			<form action="" onsubmit="return false" method="post">
+				<!--Tên đăng nhập-->
+				<div class="form-group">
+					<div class="row">
+						<div class="col-4"><label for="accountID" style="padding-top: 10%;">Tên đăng nhập</label></div>
+						<div class="col-6">
+							<input type="text" readonly name="accountID" id="accountID" class="form-control" value="@{Write(ac.AccountID);}">
+						</div>
+						<div class="col-2"></div>
+					</div>
+				</div>
+				<!--Họ tên-->
+				<div class="form-group">
+					<div class="row">
+						<div class="col-4"><label for="userName" style="padding-top: 10%;">Họ tên</label></div>
+						<div class="col-6">
+							<input readonly type="text" name="nameUser" id="userName" class="form-control" value="@{Write(Model.InfoAccount.Name);}">
+						</div>
+						<div class="col-2">
+							<button id="editName" style="font-size:23px">
+								<i id="editName1" title="Kích vào để sửa họ tên" style="display: -webkit-inline-box" class="fa fa-edit"></i>
+								<i id="editName2" title="Hoàn thành" style="display:none" class="fa fa-check"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!--Ngày sinh-->
+				<div class="form-group">
+					<div class="row">
+						<div class="col-4"><label for="birthday" style="padding-top: 10%;">Ngày sinh</label></div>
+						<div class="col-6">
+							<input type="text" readonly name="birthday" id="birthday" class="form-control" value="@{Write(Model.InfoAccount.Birthday.Value.ToShortDateString());}">
+						</div>
+						<div class="col-2">
+							<button id="editBirthday" style="font-size:23px">
+								<i id="editBirthday1" title="Kích vào để chỉnh sửa ngày sinh" class="fa fa-edit"></i>
+								<i id="editBirthday2" title="Hoàn thành" style="display:none" class="fa fa-check"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!--Email-->
+				<div class="form-group">
+					<div class="row">
+						<div class="col-4"><label for="birthday" style="padding-top: 10%;">Email</label></div>
+						<div class="col-6">
+							<input type="text" readonly name="email" id="email" class="form-control" value="@{Write(Model.InfoAccount.Email);}">
+						</div>
+						<div class="col-2"></div>
+					</div>
+				</div>
+				<!--Số điện thoại-->
+				<div class="form-group">
+					<div class="row">
+						<div class="col-4"><label for="phone" style="padding-top: 10%;">Số điện thoại</label></div>
+						<div class="col-6">
+							<input type="text" required readonly name="phone" id="phone" class="form-control" value="@{Write(Model.InfoAccount.Phone);}">
+						</div>
+						<div class="col-2">
+							<button id="editPhoneNumber" style="font-size:23px">
+								<i id="editPhoneNumber1" title="Kích vào để chỉnh sửa số điện thoại" class="fa fa-edit"></i>
+								<i id="editPhoneNumber2" title="Hoàn thành" style="display:none" class="fa fa-check"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!--Giới tính-->
+				<div class="form-group">
+					<div class="row">
+						<div class="col-4"><label for="sex" style="padding-top: 10%;">Giới tính</label></div>
+						<div class="col-6">
+							<select readonly class="form-control" id="sex" name="sex">
+								@{
+									if (Model.InfoAccount.Sex == true)
+									{
+										<option value="1" selected>Nam</option>
+									}
+									if (Model.InfoAccount.Sex == false)
+									{
+										<option value="2" selected>Nữ</option>
+									}
+								}
+							</select>
+						</div>
+						<div class="col-2">
+							<button id="editSex" style="font-size:23px">
+								<i id="editSex1" title="Kích vào để chỉnh sửa giới tính" class="fa fa-edit"></i>
+								<i id="editSex2" title="Hoàn thành" style="display:none" class="fa fa-check"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!--Tỉnh, thành phố-->
+				<div class="form-group">
+					<div class="row">
+						<div class="col-4"><label for="province" style="padding-top: 10%;">Tỉnh/Thành phố</label></div>
+						<span id="provinceID" style="display:none">@{Write(Model.ProvinceAccount.ProvinceID);}</span>
+						<div class="col-6">
+							<select readonly class="form-control" id="province" name="province">
+								<option value="@{Write(Model.ProvinceAccount.ProvinceID);}">@{Write(Model.ProvinceAccount.ProvinceName);}</option>
+							</select>
+						</div>
+						<div class="col-2">
+							<button id="editProvince" style="font-size:23px">
+								<i id="editProvince1" title="Kích vào để chỉnh sửa Tỉnh/Thành phố" class="fa fa-edit"></i>
+								<i id="editProvince2" title="Hoàn thành" style="display:none" class="fa fa-check"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!--Quận, huyện-->
+				<div class="form-group">
+					<div class="row">
+						<div class="col-4"><label for="accountID" style="padding-top: 10%;">Quận/Huyện/Thị xã</label></div>
+						<div class="col-6">
+							<select readonly class="form-control" id="district" name="district">
+								<option value="@{Write(Model.DistrictAccount.DistrictID);}">@{Write(Model.DistrictAccount.DistrictName);}</option>
+							</select>
+						</div>
+						<div class="col-2">
+							<button id="editDistrict" style="font-size:23px">
+								<i id="editDistrict1" title="Kích vào để chỉnh sửa Quận/Huyện/Thị xã" class="fa fa-edit"></i>
+								<i id="editDistrict2" title="Hoàn thành" style="display:none" class="fa fa-check"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<button id="saveInfo" class="btn btn-success" style="width:100%">Lưu lại</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+@*<div class="pt-2" style="color:red; font-style:italic; font-size: smaller"><span class="error-message pl-0" id="error-current-password"></span></div>*@

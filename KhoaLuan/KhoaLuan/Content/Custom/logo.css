@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,700');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+.logo-text {
+  transform: translateX(-50%) translateY(-50%);
+  list-style: none;
+  border-bottom: 0;
+}
+
+    .logo-text.logo-hidden {
+        border-bottom: 1px solid #fff;
+    }
+
+    .logo-text li {
+        display: inline-block;
+        float: left;
+        font-weight: 700;
+        font-size: 1em;
+        color: #000;
+        opacity: 1;
+        transition: all 0.5s ease-in-out;
+        max-width: 2em;
+    }
+    .logo-text.logo-hidden li.spaced {
+        padding-left: 0;
+    }
+    .logo-text li.spaced {
+        padding-left: 0.5em;
+    }
+
+    .logo-text.logo-hidden li.ghost {
+        opacity: 0;
+        max-width: 0;
+    }

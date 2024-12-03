@@ -1,0 +1,389 @@
+﻿@model KhoaLuan.ViewModels.DiscoverViewModel
+@{
+	ViewBag.Title = "Xem phòng duyệt và phòng chờ";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_SearchBar")
+
+<!-- ##### Ban tin ##### -->
+<section class="intro-news-area section-padding-100-0 mb-70">
+	<div class="container">
+		<div class="row justify-content-center">
+
+			<!-- Hien thi bai dang -->
+			<div class="col-12 col-lg-8">
+				<div class="intro-news-tab">
+
+					<!-- Tab danh muc -->
+					<div class="intro-news-filter d-flex justify-content-between"
+						 style="height: 45px; padding: 5px 10px;">
+						<h3 class="text-danger text-choice">Các bài viết đã kiểm duyệt và chưa kiểm duyệt</h3>
+
+										
+			</div>
+						<nav>
+							<div class="nav nav-tabs" id="nav-tab" role="tablist">
+								<a class="choice-link nav-item nav-link active" id="nav1" data-toggle="tab"
+								   href="#nav-1" role="tab" aria-controls="nav-1" aria-selected="true">Mới nhất</a>
+								<a class="choice-link nav-item nav-link" id="nav2" data-toggle="tab" href="#nav-2"
+								   role="tab" aria-controls="nav-2" aria-selected="false">Phổ biến</a>
+								<a class="choice-link nav-item nav-link" id="nav3" data-toggle="tab" href="#nav-3"
+								   role="tab" aria-controls="nav-3" aria-selected="false">Giá rẻ</a>
+							</div>
+						</nav>
+					</div>
+					<div class="tab-content" id="nav-tabContent">
+
+						<!-- Top moi nhat -->
+						<div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav1">
+							<div class="row">
+								@{
+									var i = 0;
+								}
+
+								@foreach (var item in Model.ListNewPosts)
+								{
+									var url = "6.jpg";
+									if (item.ImageList.Count > 0)
+									{
+										url = item.ImageList[0];
+									}
+									if (i < 4)
+									{
+										<!-- Single News Area -->
+										<div class="col-12 col-sm-6">
+											<div class="single-blog-post style-2 mb-5">
+												<!-- Blog Thumbnail -->
+												<div class="blog-thumbnail">
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID">
+														<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+													</a>
+												</div>
+
+												<!-- Blog Content -->
+												<div class="blog-content">
+													<div class="d-flex justify-content-between">
+														<span class="post-date d-flex align-items-center">
+															<i class="material-icons" style="font-size : 14px">access_time</i>
+															&nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+														</span>
+														<span class="post-view-rate d-flex align-items-center">
+															<i class="material-icons" style="font-size : 14px">visibility</i>
+															&nbsp; @item.Post.PostView lượt xem
+														</span>
+													</div>
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title">@item.Post.PostTitle</a>
+													<span class="post-price d-flex align-items-center mb-1">
+														<i class="material-icons pr-2" style="font-size : 14px">money</i>
+														<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/tháng
+													</span>
+													<span class="post-author d-flex align-items-center">
+														<i class="material-icons pr-1" style="font-size : 14px">person</i>
+														&nbsp; Đăng bởi: @item.Post.Name
+													</span>
+												</div>
+											</div>
+										</div>
+									}
+									if (i > 3 && i < 10)
+									{
+										<!-- Single News Area Smaller style -->
+										<div class="col-12 col-sm-6">
+											<div class="single-blog-post d-flex style-4 mb-30">
+												<!-- Blog Thumbnail -->
+												<div class="blog-thumbnail">
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID">
+														<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+													</a>
+												</div>
+
+												<!-- Blog Content -->
+												<div class="blog-content">
+													<span class="post-date d-flex align-items-center mb-1">
+														<i class="material-icons" style="font-size : 14px">access_time</i>
+														&nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+													</span>
+													<a href="/Posts/PostDetails/@item.Post.PostID" class="post-title">
+														@item.Post.PostTitle
+													</a>
+													<span class="post-price d-flex align-items-center mb-1 mt-1">
+														<i class="material-icons pr-2" style="font-size : 14px">money</i>
+														<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/tháng
+													</span>
+													<span class="post-view-rate d-flex align-items-center mb-1">
+														<i class="material-icons" style="font-size : 14px">visibility</i>
+														&nbsp; @item.Post.PostView lượt xem
+													</span>
+													<span class="post-author d-flex align-items-center">
+														<i class="material-icons pr-1" style="font-size : 14px">person</i>
+														&nbsp;Đăng bởi: @item.Post.Name
+													</span>
+												</div>
+											</div>
+										</div>
+									}
+									i++;
+								}
+							</div>
+						</div>
+						<!-- End top moi nhat -->
+						@{i = 0;}
+						<!-- Top pho bien nhat -->
+						<div class="tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav2">
+							<div class="row">
+								@foreach (var item in Model.ListMostView)
+								{
+									var url = "6.jpg";
+									if (item.ImageList.Count > 0)
+									{
+										url = item.ImageList[0];
+									}
+									if (i < 4)
+									{
+										<!-- Single News Area -->
+										<div class="col-12 col-sm-6">
+											<div class="single-blog-post style-2 mb-5">
+												<!-- Blog Thumbnail -->
+												<div class="blog-thumbnail">
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID">
+														<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+													</a>
+												</div>
+
+												<!-- Blog Content -->
+												<div class="blog-content">
+													<div class="d-flex justify-content-between">
+														<span class="post-date d-flex align-items-center">
+															<i class="material-icons" style="font-size : 14px">access_time</i>
+															&nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+														</span>
+														<span class="post-view-rate d-flex align-items-center">
+															<i class="material-icons" style="font-size : 14px">visibility</i>
+															&nbsp; @item.Post.PostView lượt xem
+														</span>
+													</div>
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title">@item.Post.PostTitle</a>
+													<span class="post-price d-flex align-items-center mb-1">
+														<i class="material-icons pr-2" style="font-size : 14px">money</i>
+														<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/tháng
+													</span>
+													<span class="post-author d-flex align-items-center">
+														<i class="material-icons pr-1" style="font-size : 14px">person</i>
+														&nbsp; Đăng bởi: @item.Post.Name
+													</span>
+												</div>
+											</div>
+										</div>
+									}
+									if (i > 3 && i < 10)
+									{
+										<!-- Single News Area Smaller style -->
+										<div class="col-12 col-sm-6">
+											<div class="single-blog-post d-flex style-4 mb-30">
+												<!-- Blog Thumbnail -->
+												<div class="blog-thumbnail">
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID">
+														<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+													</a>
+												</div>
+
+												<!-- Blog Content -->
+												<div class="blog-content">
+													<span class="post-date d-flex align-items-center mb-1">
+														<i class="material-icons" style="font-size : 14px">access_time</i>
+														&nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+													</span>
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title">
+														@item.Post.PostTitle
+													</a>
+													<span class="post-price d-flex align-items-center mb-1 mt-1">
+														<i class="material-icons pr-2" style="font-size : 14px">money</i>
+														<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/tháng
+													</span>
+													<span class="post-view-rate d-flex align-items-center mb-1">
+														<i class="material-icons" style="font-size : 14px">visibility</i>
+														&nbsp; @item.Post.PostView lượt xem
+													</span>
+													<span class="post-author d-flex align-items-center">
+														<i class="material-icons pr-1" style="font-size : 14px">person</i>
+														&nbsp;Đăng bởi: @item.Post.Name
+													</span>
+												</div>
+											</div>
+										</div>
+									}
+									i++;
+								}
+
+							</div>
+						</div>
+						<!-- End top pho bien nhat -->
+						@{i = 0;}
+						<!-- Top gia re nhat -->
+						<div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav3">
+							<div class="row">
+
+								@foreach (var item in Model.ListPostsCheapest)
+								{
+									var url = "6.jpg";
+									if (item.ImageList.Count > 0)
+									{
+										url = item.ImageList[0];
+									}
+									if (i < 4)
+									{
+										<!-- Single News Area -->
+										<div class="col-12 col-sm-6">
+											<div class="single-blog-post style-2 mb-5">
+												<!-- Blog Thumbnail -->
+												<div class="blog-thumbnail">
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID">
+														<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+													</a>
+												</div>
+
+												<!-- Blog Content -->
+												<div class="blog-content">
+													<div class="d-flex justify-content-between">
+														<span class="post-date d-flex align-items-center">
+															<i class="material-icons" style="font-size : 14px">access_time</i>
+															&nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+														</span>
+														<span class="post-view-rate d-flex align-items-center">
+															<i class="material-icons" style="font-size : 14px">visibility</i>
+															&nbsp; @item.Post.PostView lượt xem
+														</span>
+													</div>
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title">@item.Post.PostTitle</a>
+													<span class="post-price d-flex align-items-center mb-1">
+														<i class="material-icons pr-2" style="font-size : 14px">money</i>
+														<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/tháng
+													</span>
+													<span class="post-author d-flex align-items-center">
+														<i class="material-icons pr-1" style="font-size : 14px">person</i>
+														&nbsp; Đăng bởi: @item.Post.Name
+													</span>
+												</div>
+											</div>
+										</div>
+									}
+									if (i > 3 && i < 10)
+									{
+										<!-- Single News Area Smaller style -->
+										<div class="col-12 col-sm-6">
+											<div class="single-blog-post d-flex style-4 mb-30">
+												<!-- Blog Thumbnail -->
+												<div class="blog-thumbnail">
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID">
+														<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+													</a>
+												</div>
+
+												<!-- Blog Content -->
+												<div class="blog-content">
+													<span class="post-date d-flex align-items-center mb-1">
+														<i class="material-icons" style="font-size : 14px">access_time</i>
+														&nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+													</span>
+													<a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title">
+														@item.Post.PostTitle
+													</a>
+													<span class="post-price d-flex align-items-center mb-1 mt-1">
+														<i class="material-icons pr-2" style="font-size : 14px">money</i>
+														<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/tháng
+													</span>
+													<span class="post-view-rate d-flex align-items-center mb-1">
+														<i class="material-icons" style="font-size : 14px">visibility</i>
+														&nbsp; @item.Post.PostView lượt xem
+													</span>
+													<span class="post-author d-flex align-items-center">
+														<i class="material-icons pr-1" style="font-size : 14px">person</i>
+														&nbsp;Đăng bởi: @item.Post.Name
+													</span>
+												</div>
+											</div>
+										</div>
+									}
+									i++;
+								}
+							</div>
+						</div>
+						<!-- End top gia re nhat -->
+					</div>
+				</div>
+			</div>
+
+			<!-- Danh ky -->
+			
+		</div>
+	</div>
+</section>
+<!-- ##### End ban tin ##### -->
+<!-- ##### Tin trong thang ##### -->
+<div class="top-news-area section-padding-100" style="padding-top: 30px">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h3 class="text-danger" style="background-color: #f0f4f8; padding: 3px 9px;">Tin tháng này</h3>
+										<h3 class="text-danger text-choice">Lưu ý: Hãy tìm kiếm phòng để tìm những phòng được kiểm duyệt là chất lượng đáng tin cậy</h3>
+
+			</div>
+		</div>
+		<div class="row">
+			<!-- Single News Area -->
+			@foreach (var item in Model.ListPostsInMonth)
+			{
+				var url = "6.jpg";
+				if (item.ImageList.Count > 0)
+				{
+					url = item.ImageList[0];
+				}
+				if (i == 6)
+				{
+					i = 0;
+					break;
+				}
+				<div class="col-12 col-sm-6 col-lg-4">
+					<div class="single-blog-post style-2 mb-5">
+						<!-- Blog Thumbnail -->
+						<div class="blog-thumbnail">
+							<a href="/Posts/PostDetails?postID=@item.Post.PostID">
+								<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+							</a>
+						</div>
+
+						<!-- Blog Content -->
+						<div class="blog-content">
+							<div class="d-flex justify-content-between">
+								<span class="post-date d-flex align-items-center">
+									<i class="material-icons" style="font-size : 14px">access_time</i>
+									&nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+								</span>
+								<span class="post-view-rate d-flex align-items-center">
+									<i class="material-icons" style="font-size : 14px">visibility</i>
+									&nbsp; @item.Post.PostView lượt xem
+								</span>
+							</div>
+							<a href="/Posts/PostDetails/@item.Post.PostID" class="post-title">@item.Post.PostTitle</a>
+							<span class="post-price d-flex align-items-center mb-1">
+								<i class="material-icons pr-2" style="font-size : 14px">money</i>
+								<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/tháng
+							</span>
+							<span class="post-author d-flex align-items-center">
+								<i class="material-icons pr-1" style="font-size : 14px">person</i>
+								&nbsp; Đăng bởi: @item.Post.Name
+							</span>
+						</div>
+					</div>
+				</div>
+			}
+			<div class="col-12">
+				<div style="display: none" class="load-more-button text-center">
+					<a href="#" class="btn newsbox-btn">Xem thêm</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ##### End tin trong thang ##### -->

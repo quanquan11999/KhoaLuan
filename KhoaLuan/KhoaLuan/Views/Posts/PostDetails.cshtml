@@ -1,0 +1,321 @@
+﻿@model KhoaLuan.ViewModels.PostDetailsViewModel
+@using KhoaLuan.Bo
+@{
+	/**/
+
+	ViewBag.Title = "Chi tiết bài đăng";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_SearchBar")
+@Styles.Render("~/Content/Custom/single-post.css")
+@Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
+<!-- Post detail & Side bar widget -->
+<section class="post-news-area mb-70 mt-0" style="padding-top: 50px">
+	<div class="container">
+		<div class="row justify-content-center">
+			<!-- Post Details Content Area -->
+			<div class="col-12 col-lg-8">
+				@if (Model.Post != null)
+				{
+					<div class="post-details-content mb-100">
+
+						<div class="card bg-light p-1 mb-15">
+							<h3 class="text-dark card-body p-0">@Model.Post.PostTitle</h3>
+						</div>
+
+						<div class="mb-2">
+							<label class="text-danger font-bold city-name d-flex align-items-center">
+								<i class="material-icons" style="font-size : 17px; color:#dc3545">pin_drop</i>
+								&nbsp; @Model.Post.ProvinceName
+							</label>
+							<label class="d-flex align-items-center">
+								<i class="material-icons" style="font-size : 15px">access_time</i>
+								&nbsp; @Model.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+							</label>
+							<div class="d-flex justify-content-between">
+								<label class="d-flex align-items-center">
+									<i class="material-icons" style="font-size : 15px">person</i>
+									&nbsp; Đăng bởi: @Model.Post.Name
+								</label>
+								<label class="d-flex align-items-center">
+									<i class="material-icons" style="font-size : 15px">visibility</i>
+									&nbsp; @Model.Post.PostView lượt xem
+								</label>
+							</div>
+						</div>
+
+						<!-- Hinh anh slide show -->
+						<div id="demo" class="carousel slide mb-30" data-ride="carousel">
+
+							<ul class="carousel-indicators">
+								@for (int i = 0; i < Model.ImageList.Count; i++)
+								{
+									<li data-target="#demo" data-slide-to="@i"
+										class="@if (i == 0) { Write("active"); }"></li>
+								}
+							</ul>
+
+							<!-- The slideshow -->
+							<div class="carousel-inner">
+								@for (int i = 0; i < Model.ImageList.Count; i++)
+								{
+									<div class="carousel-item @if (i == 0) { Write("active"); }">
+										<img src="~/Content/Images/Houserent/@Model.ImageList[i].Trim()" alt="Ảnh trọ" width="1100" height="500">
+									</div>
+								}
+							</div>
+
+							<!-- Left and right controls -->
+							<a class="carousel-control-prev" href="#demo" data-slide="prev">
+								<span class="carousel-control-prev-icon"></span>
+							</a>
+							<a class="carousel-control-next" href="#demo" data-slide="next">
+								<span class="carousel-control-next-icon"></span>
+							</a>
+						</div>
+						<hr>
+						<!-- Thong tin chi tiet -->
+						<h5 class="mb-30 mt-30">Thông tin chi tiết</h5>
+						<table class="mb-30 table table-bordered">
+							<tbody>
+								<tr>
+									<td class="bg-light">Địa chỉ</td>
+									<td colspan="3" class="d-flex align-items-center"><i class="material-icons" style="font-size : 15px">place</i>&nbsp @Model.Post.Address</td>
+								</tr>
+								<tr>
+									<td class="bg-light">Giá thuê</td>
+									<td colspan="3" class="d-flex align-items-center">
+										<i class="material-icons mr-1" style="font-size : 15px">money</i>&nbsp; <b>@String.Format("{0:0,0}", Model.Post.Price) VND</b>
+										/ tháng
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-light">Tình trạng</td>
+									<td class="d-flex align-items-center">
+										<i class="material-icons" style="font-size : 15px">local_offer</i>
+										&nbsp @{
+											if (Model.Post.StatusID == 1)
+											{
+												Write("Còn trống");
+											}
+											else if (Model.Post.StatusID == 2)
+											{
+												Write("Đã thuê");
+											}
+											else if (Model.Post.StatusID == 3)
+											{
+												Write("Ở ghép");
+											}
+										}
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-light">Diện tích</td>
+									<td class="d-flex align-items-center"><i class="material-icons" style="font-size : 15px">pages</i>&nbsp @Model.Post.Acreage m<sup>2</sup></td>
+								</tr>
+								<tr>
+									<td class="bg-light">Ở tối đa</td>
+									<td class="d-flex align-items-center"><i class="material-icons" style="font-size : 15px">group</i>&nbsp @Model.Post.MaxPeople người</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr>
+						<!-- Tien nghi -->
+						<h5 class="mb-30 mt-30">Tiện nghi</h5>
+						<div class="row">
+							@{
+								foreach (var item in Model.Post.ListCriteriaID)
+								{
+									<div class="col-md-4 col-sm-6 mb-15">
+										<div class="alert alert-success" role="alert">
+											<i class="material-icons" style="font-size : 15px">check</i>&nbsp
+											@{Write(GetCriteriaName.GetName(item));}
+										</div>
+									</div>
+								}
+							}
+						</div>
+						<hr>
+						<!-- Mo ta -->
+						<h5 class="mb-30 mt-30">Mô tả</h5>
+						<div class="mb-30">
+							<div class="">
+								<label class="text-dark">
+									@Model.Post.Description
+								</label><br>
+							</div>
+						</div>
+						<hr>
+						<!-- Vi tri -->
+						<div class="mb-30 mt-30">
+							<h5>Thông tin liên hệ</h5>
+							<div class="mt-30">
+								<div class="card">
+									<div class=" card-body">
+										<div class="row form-bounded">
+											<input type="text" value="@Model.Post.Name" class="shadow form-control" readonly>
+											<label for="accountId" style="top: -25% !important"><i class="material-icons" style="font-size : 14px">account_box</i>&nbsp Người cho thuê</label>
+										</div>
+									</div>
+									<div class=" card-body">
+										<div class="row form-bounded">
+											<input type="text" value="@Model.Post.ProvinceName" class="shadow form-control" readonly>
+											<label for="accountId" style="top: -25% !important"><i class="material-icons" style="font-size : 14px">place</i>&nbspĐịa chỉ</label>
+										</div>
+									</div>
+									<div class=" card-body">
+										<div class="row form-bounded">
+											<input type="text" value="@Model.Post.Phone" class="shadow form-control" readonly>
+											<label for="accountId" style="top: -25% !important"><i class="material-icons" style="font-size : 14px">local_phone</i>&nbspSố điện thoại</label>
+										</div>
+									</div>
+									<div class=" card-body">
+										<div class="row form-bounded">
+											<input type="text" value="@Model.Post.Email" class="shadow form-control" readonly>
+											<label for="accountId" style="top: -25% !important"><i class="material-icons" style="font-size : 14px">mail</i>&nbspEmail</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+				else
+				{
+					<div class="alert-warning p-3 mb-5 d-flex">
+						<i class="material-icons">error</i>
+						<span style="font-weight: 900;">Bài viết không tồn tại !</span>
+					</div>
+				}
+			</div>
+
+			<!-- Sidebar Widget -->
+			<div class="col-12 col-sm-9 col-md-6 col-lg-4">
+				<div class="sidebar-area">
+
+					<div class="sidebar-area">
+						
+					</div>
+					@{
+						var db = new KhoaLuan.Models.QLTroEntities();
+						var imageList = db.Images.ToList();
+					}
+					<!-- Tin đã xem -->
+					<div class="single-widget-area news-widget mb-30">
+						@if (Model.ViewedPost != null)
+						{
+							<h4 class="mb-15">Tin vừa xem</h4>
+							<br />
+							foreach (var a in Model.ViewedPost)
+							{
+								if (a == null)
+								{
+									break;
+								}
+								<!-- Small style -->
+								<div class="single-blog-post d-flex style-4 mb-30">
+									<!-- Blog Thumbnail -->
+									<div class="blog-thumbnail">
+										<a href="/Posts/PostDetails?postID=@a.PostID">
+											<img src="~/Content/Images/Houserent/@{
+                                                var image = imageList.FirstOrDefault(i => i.MotelID.Equals(a.MotelID));
+                                                if (image != null)
+                                                {
+                                                    Write(image.Url);
+                                                }
+                                                else
+                                                {
+                                                    Write("6.jpg");
+                                                }
+                                            }" alt="Thumbnail">
+										</a>
+									</div>
+									<!-- Blog Content -->
+									<div class="blog-content">
+										<span class="post-date d-flex align-items-center mb-1">
+											<i class="material-icons" style="font-size : 14px">access_time</i>
+											&nbsp; @String.Format("{0:dd/M/yyyy HH:mm:ss}", a.PostDate)
+										</span>
+										<a href="/Posts/PostDetails?postID=@a.PostID" class="post-title">
+											@a.PostTitle
+										</a>
+										<span class="post-price d-flex align-items-center mb-1 mt-1">
+											<i class="material-icons pr-2" style="font-size : 14px">money</i>
+											<b>@String.Format("{0:0,0}", a.Price) VND</b>/tháng
+										</span>
+										<span class="post-view-rate d-flex align-items-center mb-1">
+											<i class="material-icons" style="font-size : 14px">visibility</i>
+											&nbsp; @a.PostView lượt xem
+										</span>
+										<span class="post-author d-flex align-items-center">
+											<i class="material-icons pr-1" style="font-size : 14px">person</i>
+											&nbsp;Đăng bởi: @a.Name
+										</span>
+									</div>
+								</div>
+							}
+						}
+					</div>
+
+					<!-- Tin đề xuất -->
+					<div class="single-widget-area">
+						<h4>Đề xuất cho bạn</h4>
+						<br />
+						<!-- Larger style -->
+						@if (Model.SuggestPost != null)
+						{
+							foreach (var item in Model.SuggestPost)
+							{
+								<div class="single-blog-post style-2 mb-5">
+									<!-- Blog Thumbnail -->
+									<div class="blog-thumbnail">
+										<a href="/Posts/PostDetails?postID=@item.PostID">
+											<img src="~/Content/Images/Houserent/@{
+                                                var image = imageList.FirstOrDefault(i => i.MotelID.Equals(item.MotelID));
+                                                if (image != null)
+                                                {
+                                                    Write(image.Url);
+                                                }
+                                                else
+                                                {
+                                                    Write("6.jpg");
+                                                }
+                                            }" alt="Thumbnail">
+										</a>
+									</div>
+
+									<!-- Blog Content -->
+									<div class="blog-content">
+										<div class="d-flex justify-content-between">
+											<span class="post-date d-flex align-items-center">
+												<i class="material-icons" style="font-size : 14px">access_time</i>
+												&nbsp; @item.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+											</span>
+											<span class="post-view-rate d-flex align-items-center">
+												<i class="material-icons" style="font-size : 14px">visibility</i>
+												&nbsp; @item.PostView lượt xem
+											</span>
+										</div>
+										<a href="/Posts/PostDetails?postID=@item.PostID" class="post-title">
+											@item.PostTitle
+										</a>
+										<span class="post-price d-flex align-items-center mb-1">
+											<i class="material-icons pr-2" style="font-size : 14px">money</i><b>@String.Format("{0:0,0}", item.Price)</b>
+											/ tháng
+										</span>
+										<span class="post-author d-flex align-items-center">
+											<i class="material-icons pr-1" style="font-size : 14px">person</i>
+											&nbsp; Đăng bởi: @item.Name
+										</span>
+									</div>
+								</div>
+							}
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End post detail -->

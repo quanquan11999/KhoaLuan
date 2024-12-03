@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a879f23a7e18430aa32de241daa5bb19" Name="Diagram1">
+        <EntityTypeShape EntityType="QLTroModel.Account" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.AccStatu" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.Bill" Width="1.5" PointX="12" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.BillDetail" Width="1.5" PointX="14.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.ConfirmEmail" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.Criterion" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.District" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.Image" Width="1.5" PointX="9.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.Info" Width="1.5" PointX="10.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.MotelRoom" Width="1.5" PointX="7.5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.MotelStatu" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.Post" Width="1.5" PointX="9.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.Province" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.Renter" Width="1.5" PointX="9.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLTroModel.Ward" Width="1.5" PointX="5.25" PointY="17.75" IsExpanded="true" />
+        <AssociationConnector Association="QLTroModel.FK_Account_AccStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_Info_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_MotelRoom_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_Bill_MotelRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_Bill_Renter" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_BillDetails_Bill" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_Info_ConfirmEmail" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_District_Province" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_MotelRoom_District" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_Ward_District" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_Image_MotelRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_MotelRoom_MotelStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_MotelRoom_Province" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_MotelRoom_Ward" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_Post_MotelRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.FK_Renter_MotelRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="QLTroModel.Motel_Criteria" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

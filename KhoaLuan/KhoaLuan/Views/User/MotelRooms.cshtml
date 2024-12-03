@@ -1,0 +1,318 @@
+﻿@model IEnumerable<KhoaLuan.ViewModels.RoomModel>
+@{
+	ViewBag.Title = "Quản lý phòng";
+	ViewBag.PageIndex = 2;
+	Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+<!-- ##### Content ##### -->
+
+<div class="mdk-header-layout__content top-navbar mdk-header-layout__content--scrollable h-100"
+	 style="padding-bottom: 65px;">
+	<div class="container-fluid">
+		<center>
+			<h3 style="margin-top:2%">Danh Sách Phòng</h3>
+		</center>
+		<br>
+		<div class="" style="overflow-x: scroll">
+			<table class="table table-hover table-bordered w-100" style="min-width: 850px">
+				<thead class="thead-default" style="background-color: #393836; color: #fff;">
+					<tr>
+						<th>STT</th>
+						<th>Mã phòng</th>
+						<th>Tên phòng</th>
+						<th>Tình trạng</th>
+						<th style="width: 20%"></th>
+					</tr>
+				</thead>
+				<tbody id="d">
+					@{var stt = 1;
+						if (ViewBag.PageNumber > 1)
+						{
+							stt = (ViewBag.PageNumber - 1) * 8 + 1;
+						}
+					}
+					@foreach (var item in Model)
+					{
+						<tr style="cursor: pointer">
+							<td scope="row">@stt</td>
+							<td id="motelID@{ Write(item.Motel.MotelID); }">@item.Motel.MotelID</td>
+							<td id="motelName@{ Write(item.Motel.MotelID); }">@item.Motel.MotelName</td>
+							<td>
+								@{ if (item.Motel.StatusID == 1)
+									{
+										<span style='color: green'>Còn trống</span>
+									}
+									else
+									{
+										<span style='color: royalblue'>Đang cho thuê</span>
+									}
+								}
+							</td>
+							<td>
+								<button data-toggle="modal" data-target="#modalMotelInfo" id="@item.Motel.MotelID" class="motel-row btn btn-sm btn-success" title="Kích để xem thông tin phòng">Xem thông tin</button>
+								<a class="btn btn-sm btn-success" title="Kích để chi tiết" href="~/User/RoomDetails?motelID=@item.Motel.MotelID">Chi tiết</a>
+							</td>
+						</tr>
+						<tr style="display: none">
+							<td id="motelStatus@{ Write(item.Motel.MotelID); }">@item.Motel.StatusID</td>
+							<td id="acreage@{ Write(item.Motel.MotelID); }">@item.Motel.Acreage</td>
+							<td id="price@{ Write(item.Motel.MotelID); }">@item.Motel.Price</td>
+							<td id="maxPeople@{ Write(item.Motel.MotelID); }">@item.Motel.MaxPeople</td>
+							<td id="province@{ Write(item.Motel.MotelID); }">@item.provinceName</td>
+							<td id="district@{ Write(item.Motel.MotelID); }">@item.DistrictName</td>
+							<td id="ward@{ Write(item.Motel.MotelID); }">@item.WardName</td>
+							<td id="address@{ Write(item.Motel.MotelID); }">@item.Motel.Address</td>
+							<td id="districtID@{ Write(item.Motel.MotelID); }">@item.Motel.DistrictID</td>
+							<td id="provinceID@{ Write(item.Motel.MotelID); }">@item.Motel.ProvinceID</td>
+						</tr>
+						stt++;
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	@{
+		if (ViewBag.TotalPage > 1)
+		{
+			<!-- ##### Pagination ##### -->
+			<nav aria-label="Page navigation" class="position-fixed"
+				 style="width: 90%; bottom: 0; background: #f9f9f9; padding-top: 10px;">
+				<ul class="pagination justify-content-center">
+					@if (ViewBag.PageNumber <= 1)
+					{
+						<li class="page-item disabled">
+							<a class="page-link" href="MotelRooms?pageNumber=@{Write(ViewBag.PageNumber - 1);} " aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+							</a>
+						</li>
+					}
+					else
+					{
+						<li class="page-item">
+							<a class="page-link" href="~/User/MotelRooms?pageNumber=@{Write(ViewBag.PageNumber - 1);} " aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+							</a>
+						</li>
+					}
+					@for (int i = 1; i <= ViewBag.TotalPage; i++)
+					{
+						if ((ViewBag.PageNumber == i) || (ViewBag.PageNumber < 1))
+						{
+							<li id="page" class="page-item active">
+								@Html.ActionLink(i.ToString(), "MotelRooms", "User", new { PageNumber = i }, htmlAttributes: new { @class = "page-link" })
+							</li>
+						}
+						else
+						{
+							<li id="page" class="page-item">
+								@Html.ActionLink(i.ToString(), "MotelRooms", "User", new { PageNumber = i }, htmlAttributes: new { @class = "page-link" })
+							</li>
+						}
+					}
+					@if (ViewBag.PageNumber == ViewBag.TotalPage)
+					{
+						<li class="page-item disabled">
+							<a class="page-link" href="User/MotelRooms?pageNumber=@{Write(ViewBag.PageNumber + 1);}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+								<span class="sr-only">Next</span>
+							</a>
+						</li>
+					}
+					else
+					{
+						<li class="page-item">
+							<a class="page-link" href="~/User/MotelRooms?pageNumber=@{Write(ViewBag.PageNumber + 1);}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+								<span class="sr-only">Next</span>
+							</a>
+						</li>
+					}
+				</ul>
+			</nav>
+		}
+	}
+</div>
+
+
+<!-- Modal Thong tin phong -->
+<div class="modal fade" id="modalMotelInfo" tabindex="-1" role="dialog" style="padding-left: 0px; margin-top: 2%">
+	<div class="modal-dialog" role="document" style="width: 100%; max-width: 500px; margin: 3px auto;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Thông tin phòng</h5>
+				<button type="button" id="modalMotelInfo" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body p-0">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-bordered mb-0">
+							<tbody>
+								<tr>
+									<td class="field">Mã phòng :</td>
+									<td id="motelID"></td>
+								</tr>
+								<tr>
+									<td class="field">Tên phòng :</td>
+									<td id="motelName"></td>
+								</tr>
+								<tr>
+									<td class="field">Diện tích :</td>
+									<td id="acreage"></td>
+								</tr>
+								<tr>
+									<td class="field">Giá :</td>
+									<td id="price"></td>
+								</tr>
+								<tr>
+									<td class="field">Số người tối đa :</td>
+									<td id="maxPeople"><sup>2</sup></td>
+								</tr>
+								<tr>
+									<td class="field">Tiện nghi :</td>
+									<td id="acriteria"></td>
+								</tr>
+								<tr>
+									<td class="field">Địa chỉ :</td>
+									<td id="address"></td>
+								</tr>
+								<tr>
+									<td class="field">Phường/Xã :</td>
+									<td id="ward"></td>
+								</tr>
+								<tr>
+									<td class="field">Quận/Huyện :</td>
+									<td id="district"></td>
+								</tr>
+								<tr>
+									<td class="field">Tỉnh/Thành phố :</td>
+									<td id="province"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button style="width:auto" type="button" post-id="" class="btn btn-sm btn-danger w-25 ml-3" title="Xóa phòng này"
+						data-toggle="modal" data-target="#modalDelRoom"
+						data-dismiss="modal" id="btnDeleteRoom">
+					<i class="fa fa-trash"></i> Xóa
+				</button>
+				<button style="width:auto" type="button" post-id="" class="btn btn-sm btn-success w-25 ml-3" title="sửa thông tin"
+						data-toggle="modal" data-target="#modalEditMotelInfo"
+						data-dismiss="modal" id="btnEditRoom">
+					<i class="fa fa-edit"></i> Sửa
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal edit thong tin phong -->
+<div class="modal fade" id="modalEditMotelInfo" tabindex="-1" role="dialog" style="padding-left: 0px; margin-top: 2%; margin-bottom:5%; overflow-y:auto" >
+	<div class="modal-dialog" role="document" style="width: 100%; max-width: 500px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Chỉnh sửa thông tin phòng</h5>
+				<button type="button" id="modalEditMotelInfo" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body p-0">
+				<form action="~/User/EditRoom" method="post" class="form-horizontal" style="padding: 10px">
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Mã phòng</label>
+						<div class="col-sm-9">
+							<input readonly id="editMotelID" name="editMotelID" type="text" placeholder="Mã phòng" class="form-control form-control-success">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Tên phòng</label>
+						<div class="col-sm-9">
+							<input required id="editMotelName" name="editMotelName" type="text" placeholder="Tên phòng" class="form-control form-control-success">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Diện tích</label>
+						<div class="col-sm-9">
+							<input required id="acreageEidt" name="acreageEidt" type="number" placeholder="Diện tích" class="form-control form-control-warning">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Giá</label>
+						<div class="col-sm-9">
+							<input required id="priceEdit" name="priceEdit" type="number" placeholder="Giá" class="form-control form-control-warning">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Số người tối đa</label>
+						<div class="col-sm-9">
+							<input required id="maxPeopleEdit" name="maxPeopleEdit" type="number" placeholder="Số người tối đa" class="form-control form-control-warning">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Tiện nghi</label>
+						<div class="col-sm-9 row" id="listCriteria" style="overflow-y: auto; overflow-x:hidden ; margin-left: 23%; width: 60%; max-height: 60px;">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Địa chỉ</label>
+						<div class="col-sm-9">
+							<input required id="addressEdit" name="addressEdit" type="text" placeholder="Địa chỉ" class="form-control form-control-warning">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Xã/Phường/Thị trấn</label>
+						<div class="col-sm-9">
+							<select class="form-control" name="wardEdit" id="wardEdit"></select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Quận/Huyện</label>
+						<div class="col-sm-9">
+							<select class="form-control" name="districtEdit" id="districtEdit"></select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 pt-2">Tỉnh/Thành phố</label>
+						<div class="col-sm-9">
+							<select class="form-control" name="provinceEdit" id="provinceEdit"></select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" style="width:100% !important" post-id="" class="btn btn-sm btn-success w-25 ml-3" title="Lưu lại thông tin" id="btnSaveEdit">
+							Lưu lại
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card-body text-center">
+	<!-- Modal-->
+	<div id="modalDelRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+		<div role="document" class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="exampleModalLabel" class="modal-title">Thông báo</h5>
+					<button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+				</div>
+				<div class="modal-body">
+					<p>Bạn có muốn xoá không.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-secondary">Huỷ</button>
+					<button type="button" class="btn btn-primary" id="del-room-confirm" style="width:120px">
+						Xoá
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

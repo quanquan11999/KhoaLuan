@@ -1,0 +1,174 @@
+﻿@model IEnumerable<KhoaLuan.ViewModels.PostManagerModel>
+@{
+	ViewBag.Title = "Tất cả bài viết";
+	ViewBag.PageIndex = 0;
+	Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+<!-- ##### Content ##### -->
+
+<div class="mdk-header-layout__content top-navbar mdk-header-layout__content--scrollable h-100"
+	 style="padding-bottom: 65px;">
+	<div class="container-fluid">
+		<center>
+			<h3>Danh Sách Tất Cả Bài Viết</h3>
+		</center>
+		<br>
+		<div class="" style="overflow-x: scroll">
+			<table class="table table-hover table-bordered w-100" style="min-width: 850px">
+				<thead class="thead-default" style="background-color: #393836; color: #fff;">
+					<tr>
+						<th>STT</th>
+						<th>Tiêu đề</th>
+						<th>Thời gian đăng</th>
+						<th>Trạng thái</th>
+						<th style="display: none"></th>
+					</tr>
+				</thead>
+				<tbody id="d">
+					@{var stt = 1;
+						if (ViewBag.PageNumber > 1)
+						{
+							stt = (ViewBag.PageNumber - 1) * 8 + 1;
+						}
+					}
+					@foreach (var item in Model)
+					{
+						<tr data-toggle="modal" data-target="#modalPostInfo" title="Kích để xem chi tiết"
+							class="post-row" id="@item.Post.PostID" style="cursor: pointer">
+							<td scope="row">@stt</td>
+							<th id="title@{ Write(item.Post.PostID); }">@item.Post.PostTitle</th>
+							<td id="postday@{ Write(item.Post.PostID); }">@String.Format("{0:HH:mm:ss dd/MM/yyyy}",item.Post.PostDate)</td>
+							<td style="display:none" id="postDay@{ Write(item.Post.PostID); }">@item.Post.PostDate</td>
+							@{ var status = item.Post.PostStatus.Value ? 1 : 0; }
+							@if (status == 1)
+							{
+								<td id="status@{ Write(item.Post.PostID); }" status="1"
+									class="text-success">
+									Đã được phê duyệt
+								</td>
+							}
+							else if (status == 0)
+							{
+								<td id="status@{ Write(item.Post.PostID); }" status="0"
+									class="text-danger">
+									Chưa được phê duyệt
+								</td>
+							}
+							<td style="display: none">
+								<span id="motelID@{ Write(item.Post.PostID); }">@item.motelID</span>
+								<span id="address@{ Write(item.Post.PostID); }">@item.Post.Address</span>
+								<span id="acreage@{ Write(item.Post.PostID); }">@item.Post.Acreage</span>
+								<span id="price@{ Write(item.Post.PostID); }"> @item.Post.Price</span>
+								<span id="description@{ Write(item.Post.PostID); }">@item.Post.Description</span>
+								<span id="maxPeople@{ Write(item.Post.PostID); }">@item.Post.MaxPeople</span>
+								<span id="phone@{ Write(item.Post.PostID); }">@item.Post.Phone</span>
+								<span id="email@{ Write(item.Post.PostID); }">@item.Post.Email</span>
+								<span id="criteria@{ Write(item.Post.PostID); }">
+									@{foreach (var i in item.Post.ListCriteriaID)
+										{
+											Write(i);
+										}}
+								</span>
+								@{ var imageList = "";
+									foreach (var img in item.ImageList)
+									{
+										imageList = imageList + img + ";";
+									}
+								}
+								<span id="image@{ Write(item.Post.PostID); }">@imageList</span>
+							</td>
+						</tr>
+						stt++;
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	@{
+		if (ViewBag.TotalPage > 1)
+		{
+			<!-- ##### Pagination ##### -->
+			<nav aria-label="Page navigation" class="position-fixed"
+				 style="width: 90%; bottom: 0; background: #f9f9f9; padding-top: 10px;">
+				<ul class="pagination justify-content-center">
+					@if (ViewBag.PageNumber <= 1)
+					{
+						<li class="page-item disabled">
+							<a class="page-link" href="AllPost?pageNumber=@{Write(ViewBag.PageNumber - 1);} " aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+							</a>
+						</li>
+					}
+					else
+					{
+						<li class="page-item">
+							<a class="page-link" href="~/User/AllPost?pageNumber=@{Write(ViewBag.PageNumber - 1);} " aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+							</a>
+						</li>
+					}
+					@for (int i = 1; i <= ViewBag.TotalPage; i++)
+					{
+						if ((ViewBag.PageNumber == i) || (ViewBag.PageNumber < 1))
+						{
+							<li id="page" class="page-item active">
+								@Html.ActionLink(i.ToString(), "AllPost", "User", new { PageNumber = i }, htmlAttributes: new { @class = "page-link" })
+							</li>
+						}
+						else
+						{
+							<li id="page" class="page-item">
+								@Html.ActionLink(i.ToString(), "AllPost", "User", new { PageNumber = i }, htmlAttributes: new { @class = "page-link" })
+							</li>
+						}
+					}
+					@if (ViewBag.PageNumber == ViewBag.TotalPage)
+					{
+						<li class="page-item disabled">
+							<a class="page-link" href="User/AllPost?pageNumber=@{Write(ViewBag.PageNumber + 1);}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+								<span class="sr-only">Next</span>
+							</a>
+						</li>
+					}
+					else
+					{
+						<li class="page-item">
+							<a class="page-link" href="~/User/AllPost?pageNumber=@{Write(ViewBag.PageNumber + 1);}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+								<span class="sr-only">Next</span>
+							</a>
+						</li>
+					}
+				</ul>
+			</nav>
+		}
+	}
+
+</div>
+
+<div class="card-body text-center">
+	<!-- Modal-->
+	<div id="modalDelPostConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+		<div role="document" class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="exampleModalLabel" class="modal-title">Thông báo</h5>
+					<button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+				</div>
+				<div class="modal-body">
+					<p>Bạn có muốn xoá không.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-secondary">Huỷ</button>
+					<button type="button" class="btn btn-primary" id="del-post-confirm" style="width:120px">
+						<i class="fa fa-trash"></i> Xoá
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,128 @@
+﻿<!-- Search bar -->
+@{
+	KhoaLuan.Models.Info address = null;
+	if (Session["address"] != null)
+	{
+		address = Session["address"] as KhoaLuan.Models.Info;
+	}
+}
+<div id="bg-search">
+	<div id="menu-search">
+		<form id="form-search" method="post" action="/Posts/SearchResult">
+			<div id="accordion" class="w-100">
+				<div class="card w-100 shadow p-3" style="border-radius: 15px;">
+					<!-- Chon tinh thanh pho -->
+					<div class="row">
+						<div class="form-group col-12">
+							<select name="province" id="province" class="form-control form-control-sm cursor border-radius-45">
+								<option value="0">Chọn Tỉnh/Thành phố</option>
+								@{
+									var db = new KhoaLuan.Models.QLTroEntities();
+									var listCity = db.Provinces.OrderBy(c => c.ProvinceName).ToList();
+									foreach (var item in listCity)
+									{
+										<option value="@item.ProvinceID" @if (address!=null && item.ProvinceID == address.ProvinceID) { Write("selected"); }>
+											@item.ProvinceName
+										</option>
+									}
+								}
+							</select>
+						</div>
+					</div>
+
+					<!-- Chon quan huyen -->
+					<div class="row">
+						<div class="form-group col-12" id="townshipSelect">
+							<select name="district" id="district" class="form-control form-control-sm cursor border-radius-45">
+								@if (address != null && Session["districtName"] != null)
+								{
+									var districtName = Session["districtName"].ToString();
+									<option selected value="@address.DistrictID">@districtName</option>
+								}
+								else
+								{
+									<option value="0">Chọn Quận/Huyện</option>
+								}
+							</select>
+						</div>
+					</div>
+
+					<!-- Tim nang cao -->
+					<div id="accordianId" role="tablist" aria-multiselectable="true">
+						<div id="searchAdvance">
+							<!-- Tim nang cao -->
+							<div id="sectionContentId" class="collapse in" role="tabpanel" aria-labelledby="sectionHeaderId"
+								 style="padding-top: 10px;">
+
+								<div style="border-top: solid 1px #ccc; position: relative; margin-bottom: 10px">
+									<a style="position: absolute; top: -12px; left: 50%;transform: translateX(-50%);
+                                        background: #fff; font-weight: normal; font-size: 14px;"
+									   data-toggle="collapse" data-parent="#accordianId" href="#sectionContentId">Tùy chọn thêm</a>
+								</div>
+
+								<!-- Gia thue nha -->
+								<div class="row">
+									<div class="form-group col-sm-12 col-md-12">
+										<label class="mr-3" style="display: inline-block;">Mức giá tối đa : </label>
+										<p class="" style="display: inline-block; font-size: 20px; color: #000">
+											<b id="notiprice">1,000,000</b> (VNĐ)
+										</p>
+										<div class="slidecontainer" id="scrollPrice">
+											<input type="range" name="price" id="priceSlider" disabled min="500000" max="3000000"
+												   step="100000" value="1000000" class="slider cursor">
+										</div>
+									</div>
+								</div>
+
+								<!-- Dien tich -->
+								<div class="row">
+									<div class="form-group col-12">
+										<label style="display: inline-block;">Diện tích tối đa : </label>
+										<p class="mx-3" style="display: inline-block; font-size: 20px; color: #000">
+											<b id="notiarea">100</b> (m
+											<sup>2</sup>)
+										</p>
+										<div class="slidecontainer" id="scrollArea">
+											<input type="range" name="area" id="areaSlider" disabled min="10" max="40"
+												   value="20" step="5" class="slider cursor">
+										</div>
+									</div>
+								</div>
+
+								<label>Tiện nghi :</label>
+								<div style="overflow-x: hidden; height: 120px;">
+									<div class="row">
+										@{
+											var listCriteria = db.Criteria.ToList();
+										}
+										@foreach (var item in listCriteria)
+										{
+											<div class="form-group col-sm-12 col-md-6">
+												<label class="my-checkbox-container" id="">
+													Có @{Write(item.CriteriaName);}
+													<input id="criteria@{Write(item.CriteriaID);}" value="@{Write(item.CriteriaID);}" type="checkbox" name="criteria@{Write(item.CriteriaID);}" disabled>
+													<span class="checkmark"></span>
+												</label>
+											</div>
+										}
+									</div>
+								</div>
+							</div>
+
+							<input hidden id="isSearchAdvance" type="number" disabled name="isSearchAdvance" value="1">
+						</div>
+						<!-- Tim kiem button -->
+						<center class="mt-3 mb-3">
+							<input type="submit" class="btn btn-sm my-btn-primary w-100" value="Tìm kiếm">
+						</center>
+
+						<!-- Toggle tim kiem nang cao -->
+						
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- ##### Search bar end ##### -->
+<span style="display: none" id="totalCriteria">@listCriteria.Count</span>

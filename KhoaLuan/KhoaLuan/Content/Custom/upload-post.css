@@ -1,0 +1,45 @@
+﻿.my-checkbox-container input:checked ~ .checkmark {
+    background-color: #3783b5;
+}
+
+.my-checkbox-container .checkmark:after {
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    display: none;
+}
+
+#image_holder img {
+    width: 100px;
+    height: 100%;
+    margin-left: 3px;
+    border: solid 1px #ccc;
+    padding: 3px;
+}
+
+.form-control {
+    margin-bottom: 3px !important;
+    border: solid 1px #ccc;
+}
+.form-control:focus {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.error-message {
+    padding-left: 15px;
+}
+
+.error-message i {
+    font-size: 14px !important;
+}
+
+@media (max-width: 765px) {
+    .mt-sm-3 {
+        margin-top: 1.25rem !important;
+    }
+}

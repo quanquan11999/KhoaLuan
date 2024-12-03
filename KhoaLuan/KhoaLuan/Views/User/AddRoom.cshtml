@@ -1,0 +1,160 @@
+﻿@model KhoaLuan.ViewModels.UploadViewModel
+@{
+	ViewBag.Title = "Đăng bài viết mới";
+	ViewBag.PageIndex = 3;
+	Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+@Styles.Render("~/Content/Custom/share.css")
+@Styles.Render("~/Content/Custom/upload-post.css")
+
+<style>
+	.form-control {
+		display: block;
+		width: 100%;
+		padding: 0.5rem 0.8rem;
+		font-size: 0.875rem;
+		line-height: 1.2;
+		color: #495057;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #DBE5EE;
+		border-radius: 0.25rem;
+	}
+</style>
+<div class="mdk-header-layout__content top-navbar mdk-header-layout__content--scrollable h-100">
+	<div class="container" style="margin-left: 0px;">
+		<center>
+			<h3 style="padding-top:2%">Nhập Thông Tin Phòng</h3>
+		</center>
+		<br>
+		<form action="/User/AddRoom" method="post" enctype="multipart/form-data" onsubmit="return validateDataAddRoom()">
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="motelNameAdd">Tên phòng :</label>
+				</div>
+				<div class="col-sm-12 col-md-10 position-relative">
+					<input type="text" id="motelNameAdd" name="motelName" class="form-control" />
+					<span class="error-message" id="motelNameRoomErrorMessage">
+						<i class="material-icons">error</i> Phải nhập tên phòng.
+					</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="provinceAdd">Tỉnh/Thành:</label>
+				</div>
+				<div class="col-sm-12 col-md-2">
+					<select name="province" id="provinceAdd" class="form-control cursor">
+						<option class="cursor" value="0">Chọn Tỉnh/Thành</option>
+						@foreach (var item in Model.ListProvince)
+						{
+							<option class="cursor" value="@item.ProvinceID">@item.ProvinceName</option>
+						}
+					</select>
+					<span class="error-message" id="provinceAddErrorMessage">
+						<i class="material-icons">error</i> Phải chọn tỉnh/thành.
+					</span>
+				</div>
+
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1 mt-sm-3 mt-md-0">
+					<label for="districtAdd">Quận/Huyện/Thị xã:</label>
+				</div>
+				<div class="col-sm-12 col-md-2">
+					<select name="district" id="districtAdd" class="form-control cursor">
+						<option value="0">Chọn Quận/Huyện</option>
+					</select>
+					<span class="error-message" id="districtAddErrorMessage">
+						<i class="material-icons">error</i> Phải chọn quận/huyện.
+					</span>
+				</div>
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1 mt-sm-3 mt-md-0">
+					<label for="wardAdd">Phường/Xã/Thị trấn:</label>
+				</div>
+				<div class="col-sm-12 col-md-2">
+					<select name="ward" id="wardAdd" class="form-control cursor">
+						<option value="0">Chọn Phường/Xã</option>
+					</select>
+					<span class="error-message" id="wardAddErrorMessage">
+						<i class="material-icons">error</i> Phải chọn Phường/Xã.
+					</span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1 mt-sm-3 mt-md-0">
+					<label for="acreageAdd">Diện tích:</label>
+				</div>
+				<div class="col-sm-12 col-md-2 position-relative">
+					<input type="number" id="acreageAdd" name="acreage" class="form-control" />
+					<span class="error-message" id="acreageAddErrorMessage">
+						<i class="material-icons">error</i> Phải nhập diện tích.
+					</span>
+					<span style="position: absolute; top: 7px; right: 25px">(m<sup>2</sup>)</span>
+				</div>
+
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="priceAdd">Giá thuê:</label>
+				</div>
+				<div class="col-sm-12 col-md-2 position-relative">
+					<input type="text" id="priceAdd" name="price" class="form-control" />
+					<label for="price" style="background-color: #fff"></label>
+					<span class="error-message" id="priceAddErrorMessage">
+						<i class="material-icons">error</i> Phải nhập giá thuê.
+					</span>
+					<span style="position: absolute; top: 7px; right: 25px">(VND)</span>
+				</div>
+
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="maxPeopleAdd">Ở tối đa:</label>
+				</div>
+				<div class="col-sm-12 col-md-2 position-relative">
+					<input type="number" id="maxPeopleAdd" name="maxPeople" class="form-control" />
+					<span class="error-message" id="maxPeopleAddErrorMessage">
+						<i class="material-icons">error</i> Phải nhập số người ở tối đa.
+					</span>
+					<span style="position: absolute; top: 7px; right: 25px">(người)</span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="addressRoomAdd">Địa chỉ trọ:</label>
+				</div>
+				<div class="col-sm-12 col-md-10 position-relative">
+					<input type="text" id="addressRoomAdd" name="addressRoom" class="form-control" />
+					<span class="error-message" id="addressAddRoomErrorMessage">
+						<i class="material-icons">error</i> Phải nhập địa chỉ.
+					</span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label>Tiện nghi :</label>
+				</div>
+				<div class="form-group row" style="overflow-x: hidden; margin-left: 4%; width: 80%; max-height: 100px;">
+					@foreach (var item in Model.ListCriterion)
+					{
+						<div class="col-sm-12 col-md-3">
+							<label class="my-checkbox-container">
+								@item.CriteriaName
+								<input type="checkbox" value="1" name="criteria@{Write(item.CriteriaID);}" id="criteria@{Write(item.CriteriaID);}">
+								<span class="checkmark" style="width: 20px; height: 20px"></span>
+							</label>
+						</div>
+					}
+				</div>
+			</div>
+
+			<div class="row form-group">
+				<div class="col-sm-0 col-md-2"></div>
+				<div class="col-sm-12 col-md-10">
+					<center><input type="submit" class="btn btn-sm btn-primary w-100" value="Thêm" /></center>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+

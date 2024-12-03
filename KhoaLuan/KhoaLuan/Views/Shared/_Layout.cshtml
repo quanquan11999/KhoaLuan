@@ -1,0 +1,221 @@
+﻿@using KhoaLuan.Models;
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title</title>
+
+	<!-- Favicon -->
+	<link rel="icon" href="~/Content/Images/core-img/favicon.ico">
+
+	@Styles.Render("~/Content/style")
+	@Styles.Render("~/Content/share")
+	@Styles.Render("~/Content/Custom/logo.css")
+</head>
+<body>
+	@Html.Partial("_FixedTopNav")
+	<!-- ##### Header Area Start ##### -->
+	<header class="header-area">
+		<!-- Navbar Area -->
+		<div class="newsbox-main-menu" style="height: 75px;">
+			<div class="classy-nav-container breakpoint-off">
+				<div class="container-fluid">
+					<!-- Menu -->
+					<nav class="classy-navbar justify-content-between" id="newsboxNav" style="height: 75px">
+						<a href="/" style="text-decoration:none">
+							<!-- Nav brand -->
+							<div class="nav-brand" style="width: 200px;margin-left: 65px;">
+								<ul class="logo-text logo-hidden logoWeb" id="logoWeb" style="width: 200px;">
+										<li class="spaced" style="color : red;">T</li>
+								<li class="ghost">ro</li>
+								<li class="spaced" style="color : red;">O</li>
+								<li class="ghost">line</li>
+								</ul>
+							</div>
+						</a>
+
+						<!-- Navbar Toggler -->
+						<div class="classy-navbar-toggler">
+							@if ((Request.Url.Segments.Count() > 1) && ((Request.Url.Segments[2] != "Index")))
+							{
+								<i class="material-icons mr-4 searchToggler">search</i>
+							}
+							<span class="navbarToggler"><span></span><span></span><span></span></span>
+						</div>
+
+						<!-- Menu -->
+						<div class="classy-menu">
+
+							<!-- Close Button -->
+							<div class="classycloseIcon">
+								<div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+							</div>
+
+							<!-- Nav Start -->
+							<div class="classynav">
+								<ul>
+									<li>
+										<a href="~/Posts/Discover">Xem phòng duyệt và phòng chờ</a>
+									</li>
+									@{
+										var account = Session["account"] as Account;
+									}
+									@if (account == null)
+									{
+									
+										<li>
+											<a href="#" data-toggle="modal" data-target="#loginModal">Đăng nhập</a>
+										</li>
+									}
+									else
+									{
+										<li>
+											<a href="/Account/Logout">Đăng xuất</a>
+										</li>
+										if (account.Role == 0)
+										{
+										<li>
+											<a href="/Admin/AllAccount">Quản lý</a>
+										</li>
+										}
+										else if (account.Role == 1)
+										{
+											<li>
+												<a href="/User/AllPost">Quản lý</a>
+											</li>
+										}
+
+									}
+								</ul>
+							</div>
+							<!-- Nav End -->
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- ##### Header Area End ##### -->
+	<div></div>
+	@RenderBody()
+
+	<!-- ##### Footer Area Start ##### -->
+	<footer class="footer-area pt-5">
+		<!-- Footer Logo -->
+		<div class="footer-logo mb-100">
+			<span style="font-size: 40px; font-weight: 600; background-color: white; padding-left: 10px; padding-right: 10px">
+				<span style="color:red;">T</span>ro <span style="color:red">O</span>line
+			</span>
+		</div>
+		<!-- Footer Content -->
+		<div class="container">
+			<div class="row" style="margin-bottom: 0px">
+				<div class="col-12">
+					<div class="footer-content text-center">
+						<!-- Social Info -->
+						<div class="footer-social-info">
+							<a href="https://www.facebook.com/groups/815656545285365/" data-toggle="tooltip"
+							   data-placement="top" title="Facebook nhóm">Fb</a>
+							<a href="#" data-toggle="tooltip" data-placement="top" title="Đại học khoa học Huế">HUSC</a>
+							<a href="#" data-toggle="tooltip" data-placement="top"
+							   title="Khoa công nghệ thông tin">IT</a>
+						</div>
+
+						<!-- Copywrite Text -->
+						<p class="copywrite-text">
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script>
+							All rights reserved | This template is made
+							<i class="fa fa-heart-o" aria-hidden="true"></i>
+							by
+							<a href="#" target="_blank">.NET Group 14</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+	@Html.Partial("_LoginModal")
+	@Html.Partial("_SignUpModal")
+	<!-- ##### Footer Area End ##### -->
+
+	@Scripts.Render("~/bundles/jquery")
+	@*@Scripts.Render("~/bundles/share")*@
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/custom")
+
+
+	@RenderSection("scripts", required: false)
+
+	@{
+		if (Request.Url.Segments.Count() >= 2)
+		{
+			var action = Request.Url.Segments[2];
+			if (action.Equals("PostDetails") || action.Equals("SearchResult") || action.Equals("Discover"))
+			{ <!-- Auto scroll to content -->
+				<script>
+					$(document).ready(function () {
+						if ($('html, body').scrollTop() < 10) {
+							if (screen.width >= 769) {
+								$('html, body').delay(100).animate({ scrollTop: 500 }, 1000);
+							}
+						}
+					});
+				</script>
+			}
+		}
+	}
+	<script>
+		$(function () {
+			var text = $(".logo-text");
+			$(".logoWeb").hover(function () {
+				text.removeClass("logo-hidden");
+			}, function () {
+				text.addClass("logo-hidden");
+			});
+		});
+	</script>
+	<script>
+		// Show top nav when scroll down
+		$(document).ready(fixedTopNav);
+		$(window).scroll(fixedTopNav);
+		function fixedTopNav() {
+			if (($(window).scrollTop() >= 75)) {
+				$('#fixedTopNav').css({ 'top': '0' });
+			} else {
+				$('#fixedTopNav').css({ 'top': '-100px' });
+			}
+		}
+
+		// Show search form
+		$('.searchToggler').click(function () {
+			if (screen.width <= 768) {
+				$('#fixedTopNav').toggleClass('shadow');
+				$('#menu-search').toggleClass('hide-menu-search');
+				$('#bg-search').toggleClass('fixed-bg-search');
+				$('#sectionContentId').removeClass('show');
+			} else {
+				$('html, body').delay(100).animate({ scrollTop: 0 }, 500);
+			}
+		});
+		$(document).ready(function () {
+			$('#showSignUpModal').click(function () {
+				$('#signUpModal').css('overflow-x', 'hidden');
+				$('#signUpModal').css('overflow-y', 'auto');
+				$('#loginModal').modal('hide');
+				$('#signUpModal').modal('show');
+			});
+			$('#closeSignUpModal').click(function () {
+				$('#signUpModal').modal('hide');
+			});
+			$('#showSignUpModal1').click(function () {
+				$('#signUpModal').modal('show');
+			});
+		});
+	</script>
+</body>
+</html>

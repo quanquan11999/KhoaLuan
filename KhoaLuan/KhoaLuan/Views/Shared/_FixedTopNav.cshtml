@@ -1,0 +1,74 @@
+﻿<!-- ##### Header Area Start ##### -->
+<link rel="stylesheet" href="~/Content/Custom/logo.css" />
+<header class="header-area shadow" id="fixedTopNav" style="position: fixed; top: -100px; transition: 1000ms">
+	<!-- Navbar Area -->
+	<div class="newsbox-main-menu" style="height: 75px;">
+		<div class="classy-nav-container breakpoint-off">
+			<div class="container-fluid">
+				<!-- Menu -->
+				<nav class="classy-navbar justify-content-between" id="newsboxNav" style="height: 75px">
+
+					<!-- Nav brand -->
+					<a href="/" style="text-decoration:none">
+						<div class="nav-brand" style="width: 200px;margin-left: 65px;">
+							<ul class="logo-text logo-hidden logoWeb" id="logoWeb" style="width: 200px;">
+								<li class="spaced" style="color : red;">T</li>
+								<li class="ghost">ro</li>
+								<li class="spaced" style="color : red;">O</li>
+								<li class="ghost">line</li>
+							</ul>
+						</div>
+					</a>
+
+					<!-- Navbar Toggler -->
+					<div class="classy-navbar-toggler">
+						@if ((Request.Url.Segments.Count() > 1) && ((Request.Url.Segments[2] != "Index")))
+						{
+							<i class="material-icons mr-4 searchToggler">search</i>
+						}
+						<span class="navbarToggler"><span></span><span></span><span></span></span>
+					</div>
+
+					<!-- Menu -->
+					<div class="classy-menu">
+
+						<!-- Close Button -->
+						<div class="classycloseIcon">
+							<div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+						</div>
+
+						<!-- Nav Start -->
+						<div class="classynav">
+							<ul>
+								@if ((Request.Url.Segments.Count() > 1) && ((Request.Url.Segments[2] != "Index")))
+								{
+									<li class="mr-2">
+										<i class="material-icons searchToggler align-middle cursor">search</i>
+									</li>
+								}
+								<li>
+									<a href="~/Posts/Discover">Xem phòng duyệt và phòng chờ</a>
+								</li>
+								@if (Session["account"] == null)
+								{
+								
+									<li>
+										<a href="#" data-toggle="modal" data-target="#loginModal">Đăng nhập</a>
+									</li>
+								}
+								else
+								{
+									<li>
+										<a href="/Account/Logout">Đăng xuất</a>
+									</li>
+								}
+							</ul>
+						</div>
+						<!-- Nav End -->
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+</header>
+<!-- ##### Header Area End ##### -->

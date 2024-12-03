@@ -1,0 +1,1185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QLTroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" />
+          <Property Name="Role" Type="int" />
+          <Property Name="AccountStatusID" Type="int" />
+        </EntityType>
+        <EntityType Name="AccStatus">
+          <Key>
+            <PropertyRef Name="AccountStatusID" />
+          </Key>
+          <Property Name="AccountStatusID" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="BillID" />
+          </Key>
+          <Property Name="BillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MotelID" Type="int" />
+          <Property Name="RentDay" Type="date" />
+          <Property Name="RentID" Type="int" />
+        </EntityType>
+        <EntityType Name="BillDetails">
+          <Key>
+            <PropertyRef Name="BillDetailsID" />
+          </Key>
+          <Property Name="BillDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BillID" Type="int" />
+          <Property Name="FromDay" Type="date" />
+          <Property Name="ToDay" Type="date" />
+          <Property Name="BillStatus" Type="bit" />
+          <Property Name="RoomRates" Type="bigint" />
+          <Property Name="ElectricityPrice" Type="bigint" />
+          <Property Name="WaterPrice" Type="bigint" />
+          <Property Name="InternetPrice" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ConfirmEmail">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="VerificationCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="Time" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Criteria">
+          <Key>
+            <PropertyRef Name="CriteriaID" />
+          </Key>
+          <Property Name="CriteriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CriteriaName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="int" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Kind" Type="nvarchar" MaxLength="20" />
+          <Property Name="Latitude" Type="float" />
+          <Property Name="Longitude" Type="float" />
+          <Property Name="ProvinceID" Type="int" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="100" />
+          <Property Name="MotelID" Type="int" />
+        </EntityType>
+        <EntityType Name="Info">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Sex" Type="bit" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="10" />
+          <Property Name="Email" Type="nvarchar" MaxLength="30" />
+          <Property Name="ProvinceID" Type="int" />
+          <Property Name="DistrictID" Type="int" />
+        </EntityType>
+        <EntityType Name="Motel_Criteria">
+          <Key>
+            <PropertyRef Name="MotelID" />
+            <PropertyRef Name="CriteriaID" />
+          </Key>
+          <Property Name="MotelID" Type="int" Nullable="false" />
+          <Property Name="CriteriaID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MotelRoom">
+          <Key>
+            <PropertyRef Name="MotelID" />
+          </Key>
+          <Property Name="MotelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MotelName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Acreage" Type="int" />
+          <Property Name="Price" Type="bigint" />
+          <Property Name="ProvinceID" Type="int" />
+          <Property Name="DistrictID" Type="int" />
+          <Property Name="AccountID" Type="nvarchar" MaxLength="20" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="MaxPeople" Type="int" />
+          <Property Name="WardID" Type="int" />
+        </EntityType>
+        <EntityType Name="MotelStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="PostView" Type="int" />
+          <Property Name="PostDate" Type="datetime" />
+          <Property Name="MotelID" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="PostStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="ProvinceID" />
+          </Key>
+          <Property Name="ProvinceID" Type="int" Nullable="false" />
+          <Property Name="ProvinceName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Kind" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Renter">
+          <Key>
+            <PropertyRef Name="RentID" />
+          </Key>
+          <Property Name="RentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Sex" Type="bit" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="11" />
+          <Property Name="Note" Type="nvarchar" MaxLength="255" />
+          <Property Name="MotelID" Type="int" />
+        </EntityType>
+        <EntityType Name="Ward">
+          <Key>
+            <PropertyRef Name="WardID" />
+          </Key>
+          <Property Name="WardID" Type="int" Nullable="false" />
+          <Property Name="WardName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Kind" Type="nvarchar" MaxLength="20" />
+          <Property Name="DistrictID" Type="int" />
+          <Property Name="Longitude" Type="float" />
+          <Property Name="Latitude" Type="float" />
+        </EntityType>
+        <Association Name="FK_Account_AccStatus">
+          <End Role="AccStatus" Type="Self.AccStatus" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccStatus">
+              <PropertyRef Name="AccountStatusID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AccountStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Renter">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="RentID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="RentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillDetails_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
+          <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="BillID" />
+            </Principal>
+            <Dependent Role="BillDetails">
+              <PropertyRef Name="BillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_District_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Info_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Info" Type="Self.Info" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Info">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Info_ConfirmEmail">
+          <End Role="ConfirmEmail" Type="Self.ConfirmEmail" Multiplicity="0..1" />
+          <End Role="Info" Type="Self.Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfirmEmail">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Info">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Motel_Criteria_Criteria">
+          <End Role="Criteria" Type="Self.Criteria" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Motel_Criteria" Type="Self.Motel_Criteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="CriteriaID" />
+            </Principal>
+            <Dependent Role="Motel_Criteria">
+              <PropertyRef Name="CriteriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Motel_Criteria_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Motel_Criteria" Type="Self.Motel_Criteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Motel_Criteria">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_District">
+          <End Role="District" Type="Self.District" Multiplicity="0..1" />
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_MotelStatus">
+          <End Role="MotelStatus" Type="Self.MotelStatus" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_Ward">
+          <End Role="Ward" Type="Self.Ward" Multiplicity="0..1" />
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ward">
+              <PropertyRef Name="WardID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="WardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Renter_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Renter" Type="Self.Renter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Renter">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ward_District">
+          <End Role="District" Type="Self.District" Multiplicity="0..1" />
+          <End Role="Ward" Type="Self.Ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="Ward">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLTroModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccStatus" EntityType="Self.AccStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BillDetails" EntityType="Self.BillDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfirmEmail" EntityType="Self.ConfirmEmail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Criteria" EntityType="Self.Criteria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Info" EntityType="Self.Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Motel_Criteria" EntityType="Self.Motel_Criteria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MotelRoom" EntityType="Self.MotelRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MotelStatus" EntityType="Self.MotelStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Renter" EntityType="Self.Renter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ward" EntityType="Self.Ward" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_AccStatus" Association="Self.FK_Account_AccStatus">
+            <End Role="AccStatus" EntitySet="AccStatus" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_MotelRoom" Association="Self.FK_Bill_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Renter" Association="Self.FK_Bill_Renter">
+            <End Role="Renter" EntitySet="Renter" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillDetails_Bill" Association="Self.FK_BillDetails_Bill">
+            <End Role="Bill" EntitySet="Bill" />
+            <End Role="BillDetails" EntitySet="BillDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_District_Province" Association="Self.FK_District_Province">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_MotelRoom" Association="Self.FK_Image_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Info_Account" Association="Self.FK_Info_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Info" EntitySet="Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Info_ConfirmEmail" Association="Self.FK_Info_ConfirmEmail">
+            <End Role="ConfirmEmail" EntitySet="ConfirmEmail" />
+            <End Role="Info" EntitySet="Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Motel_Criteria_Criteria" Association="Self.FK_Motel_Criteria_Criteria">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="Motel_Criteria" EntitySet="Motel_Criteria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Motel_Criteria_MotelRoom" Association="Self.FK_Motel_Criteria_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+            <End Role="Motel_Criteria" EntitySet="Motel_Criteria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_Account" Association="Self.FK_MotelRoom_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_District" Association="Self.FK_MotelRoom_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_MotelStatus" Association="Self.FK_MotelRoom_MotelStatus">
+            <End Role="MotelStatus" EntitySet="MotelStatus" />
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_Province" Association="Self.FK_MotelRoom_Province">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_Ward" Association="Self.FK_MotelRoom_Ward">
+            <End Role="Ward" EntitySet="Ward" />
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_MotelRoom" Association="Self.FK_Post_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Renter_MotelRoom" Association="Self.FK_Renter_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRoom" />
+            <End Role="Renter" EntitySet="Renter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ward_District" Association="Self.FK_Ward_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Ward" EntitySet="Ward" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLTroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="Int32" />
+          <Property Name="AccountStatusID" Type="Int32" />
+          <NavigationProperty Name="AccStatu" Relationship="Self.FK_Account_AccStatus" FromRole="Account" ToRole="AccStatus" />
+          <NavigationProperty Name="Info" Relationship="Self.FK_Info_Account" FromRole="Account" ToRole="Info" />
+          <NavigationProperty Name="MotelRooms" Relationship="Self.FK_MotelRoom_Account" FromRole="Account" ToRole="MotelRoom" />
+        </EntityType>
+        <EntityType Name="AccStatu">
+          <Key>
+            <PropertyRef Name="AccountStatusID" />
+          </Key>
+          <Property Name="AccountStatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_AccStatus" FromRole="AccStatus" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="BillID" />
+          </Key>
+          <Property Name="BillID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MotelID" Type="Int32" />
+          <Property Name="RentDay" Type="DateTime" Precision="0" />
+          <Property Name="RentID" Type="Int32" />
+          <NavigationProperty Name="MotelRoom" Relationship="Self.FK_Bill_MotelRoom" FromRole="Bill" ToRole="MotelRoom" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK_Bill_Renter" FromRole="Bill" ToRole="Renter" />
+          <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetails_Bill" FromRole="Bill" ToRole="BillDetails" />
+        </EntityType>
+        <EntityType Name="BillDetail">
+          <Key>
+            <PropertyRef Name="BillDetailsID" />
+          </Key>
+          <Property Name="BillDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BillID" Type="Int32" />
+          <Property Name="FromDay" Type="DateTime" Precision="0" />
+          <Property Name="ToDay" Type="DateTime" Precision="0" />
+          <Property Name="BillStatus" Type="Boolean" />
+          <Property Name="RoomRates" Type="Int64" />
+          <Property Name="ElectricityPrice" Type="Int64" />
+          <Property Name="WaterPrice" Type="Int64" />
+          <Property Name="InternetPrice" Type="Int64" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_BillDetails_Bill" FromRole="BillDetails" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="ConfirmEmail">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VerificationCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="Time" Precision="7" />
+          <NavigationProperty Name="Infoes" Relationship="Self.FK_Info_ConfirmEmail" FromRole="ConfirmEmail" ToRole="Info" />
+        </EntityType>
+        <EntityType Name="Criterion">
+          <Key>
+            <PropertyRef Name="CriteriaID" />
+          </Key>
+          <Property Name="CriteriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CriteriaName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MotelRooms" Relationship="Self.Motel_Criteria" FromRole="Criteria" ToRole="MotelRoom" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="Int32" Nullable="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Kind" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="Double" />
+          <Property Name="Longitude" Type="Double" />
+          <Property Name="ProvinceID" Type="Int32" />
+          <NavigationProperty Name="Province" Relationship="Self.FK_District_Province" FromRole="District" ToRole="Province" />
+          <NavigationProperty Name="MotelRooms" Relationship="Self.FK_MotelRoom_District" FromRole="District" ToRole="MotelRoom" />
+          <NavigationProperty Name="Wards" Relationship="Self.FK_Ward_District" FromRole="District" ToRole="Ward" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MotelID" Type="Int32" />
+          <NavigationProperty Name="MotelRoom" Relationship="Self.FK_Image_MotelRoom" FromRole="Image" ToRole="MotelRoom" />
+        </EntityType>
+        <EntityType Name="Info">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="Boolean" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ProvinceID" Type="Int32" />
+          <Property Name="DistrictID" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Info_Account" FromRole="Info" ToRole="Account" />
+          <NavigationProperty Name="ConfirmEmail" Relationship="Self.FK_Info_ConfirmEmail" FromRole="Info" ToRole="ConfirmEmail" />
+        </EntityType>
+        <EntityType Name="MotelRoom">
+          <Key>
+            <PropertyRef Name="MotelID" />
+          </Key>
+          <Property Name="MotelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MotelName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Acreage" Type="Int32" />
+          <Property Name="Price" Type="Int64" />
+          <Property Name="ProvinceID" Type="Int32" />
+          <Property Name="DistrictID" Type="Int32" />
+          <Property Name="AccountID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MaxPeople" Type="Int32" />
+          <Property Name="WardID" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_MotelRoom_Account" FromRole="MotelRoom" ToRole="Account" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_MotelRoom" FromRole="MotelRoom" ToRole="Bill" />
+          <NavigationProperty Name="District" Relationship="Self.FK_MotelRoom_District" FromRole="MotelRoom" ToRole="District" />
+          <NavigationProperty Name="Images" Relationship="Self.FK_Image_MotelRoom" FromRole="MotelRoom" ToRole="Image" />
+          <NavigationProperty Name="MotelStatu" Relationship="Self.FK_MotelRoom_MotelStatus" FromRole="MotelRoom" ToRole="MotelStatus" />
+          <NavigationProperty Name="Province" Relationship="Self.FK_MotelRoom_Province" FromRole="MotelRoom" ToRole="Province" />
+          <NavigationProperty Name="Ward" Relationship="Self.FK_MotelRoom_Ward" FromRole="MotelRoom" ToRole="Ward" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK_Post_MotelRoom" FromRole="MotelRoom" ToRole="Post" />
+          <NavigationProperty Name="Renters" Relationship="Self.FK_Renter_MotelRoom" FromRole="MotelRoom" ToRole="Renter" />
+          <NavigationProperty Name="Criteria" Relationship="Self.Motel_Criteria" FromRole="MotelRoom" ToRole="Criteria" />
+        </EntityType>
+        <EntityType Name="MotelStatu">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MotelRooms" Relationship="Self.FK_MotelRoom_MotelStatus" FromRole="MotelStatus" ToRole="MotelRoom" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostView" Type="Int32" />
+          <Property Name="PostDate" Type="DateTime" Precision="3" />
+          <Property Name="MotelID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PostStatus" Type="Boolean" />
+          <NavigationProperty Name="MotelRoom" Relationship="Self.FK_Post_MotelRoom" FromRole="Post" ToRole="MotelRoom" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="ProvinceID" />
+          </Key>
+          <Property Name="ProvinceID" Type="Int32" Nullable="false" />
+          <Property Name="ProvinceName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Kind" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Districts" Relationship="Self.FK_District_Province" FromRole="Province" ToRole="District" />
+          <NavigationProperty Name="MotelRooms" Relationship="Self.FK_MotelRoom_Province" FromRole="Province" ToRole="MotelRoom" />
+        </EntityType>
+        <EntityType Name="Renter">
+          <Key>
+            <PropertyRef Name="RentID" />
+          </Key>
+          <Property Name="RentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Sex" Type="Boolean" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MotelID" Type="Int32" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Renter" FromRole="Renter" ToRole="Bill" />
+          <NavigationProperty Name="MotelRoom" Relationship="Self.FK_Renter_MotelRoom" FromRole="Renter" ToRole="MotelRoom" />
+        </EntityType>
+        <EntityType Name="Ward">
+          <Key>
+            <PropertyRef Name="WardID" />
+          </Key>
+          <Property Name="WardID" Type="Int32" Nullable="false" />
+          <Property Name="WardName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Kind" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictID" Type="Int32" />
+          <Property Name="Longitude" Type="Double" />
+          <Property Name="Latitude" Type="Double" />
+          <NavigationProperty Name="District" Relationship="Self.FK_Ward_District" FromRole="Ward" ToRole="District" />
+          <NavigationProperty Name="MotelRooms" Relationship="Self.FK_MotelRoom_Ward" FromRole="Ward" ToRole="MotelRoom" />
+        </EntityType>
+        <Association Name="FK_Account_AccStatus">
+          <End Role="AccStatus" Type="Self.AccStatu" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccStatus">
+              <PropertyRef Name="AccountStatusID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AccountStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Info_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Info" Type="Self.Info" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Info">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Renter">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="RentID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="RentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillDetails_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
+          <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="BillID" />
+            </Principal>
+            <Dependent Role="BillDetails">
+              <PropertyRef Name="BillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Info_ConfirmEmail">
+          <End Role="ConfirmEmail" Type="Self.ConfirmEmail" Multiplicity="0..1" />
+          <End Role="Info" Type="Self.Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfirmEmail">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Info">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_District_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_District">
+          <End Role="District" Type="Self.District" Multiplicity="0..1" />
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ward_District">
+          <End Role="District" Type="Self.District" Multiplicity="0..1" />
+          <End Role="Ward" Type="Self.Ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="Ward">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_MotelStatus">
+          <End Role="MotelStatus" Type="Self.MotelStatu" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MotelRoom_Ward">
+          <End Role="Ward" Type="Self.Ward" Multiplicity="0..1" />
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ward">
+              <PropertyRef Name="WardID" />
+            </Principal>
+            <Dependent Role="MotelRoom">
+              <PropertyRef Name="WardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Renter_MotelRoom">
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Renter" Type="Self.Renter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotelRoom">
+              <PropertyRef Name="MotelID" />
+            </Principal>
+            <Dependent Role="Renter">
+              <PropertyRef Name="MotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Motel_Criteria">
+          <End Role="Criteria" Type="Self.Criterion" Multiplicity="*" />
+          <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="QLTroEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="AccStatus" EntityType="Self.AccStatu" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="BillDetails" EntityType="Self.BillDetail" />
+          <EntitySet Name="ConfirmEmails" EntityType="Self.ConfirmEmail" />
+          <EntitySet Name="Criteria" EntityType="Self.Criterion" />
+          <EntitySet Name="Districts" EntityType="Self.District" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="Infoes" EntityType="Self.Info" />
+          <EntitySet Name="MotelRooms" EntityType="Self.MotelRoom" />
+          <EntitySet Name="MotelStatus" EntityType="Self.MotelStatu" />
+          <EntitySet Name="Posts" EntityType="Self.Post" />
+          <EntitySet Name="Provinces" EntityType="Self.Province" />
+          <EntitySet Name="Renters" EntityType="Self.Renter" />
+          <EntitySet Name="Wards" EntityType="Self.Ward" />
+          <AssociationSet Name="FK_Account_AccStatus" Association="Self.FK_Account_AccStatus">
+            <End Role="AccStatus" EntitySet="AccStatus" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Info_Account" Association="Self.FK_Info_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Info" EntitySet="Infoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_Account" Association="Self.FK_MotelRoom_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_MotelRoom" Association="Self.FK_Bill_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Renter" Association="Self.FK_Bill_Renter">
+            <End Role="Renter" EntitySet="Renters" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillDetails_Bill" Association="Self.FK_BillDetails_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="BillDetails" EntitySet="BillDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Info_ConfirmEmail" Association="Self.FK_Info_ConfirmEmail">
+            <End Role="ConfirmEmail" EntitySet="ConfirmEmails" />
+            <End Role="Info" EntitySet="Infoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_District_Province" Association="Self.FK_District_Province">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="District" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_District" Association="Self.FK_MotelRoom_District">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ward_District" Association="Self.FK_Ward_District">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Ward" EntitySet="Wards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_MotelRoom" Association="Self.FK_Image_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_MotelStatus" Association="Self.FK_MotelRoom_MotelStatus">
+            <End Role="MotelStatus" EntitySet="MotelStatus" />
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_Province" Association="Self.FK_MotelRoom_Province">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MotelRoom_Ward" Association="Self.FK_MotelRoom_Ward">
+            <End Role="Ward" EntitySet="Wards" />
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_MotelRoom" Association="Self.FK_Post_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Renter_MotelRoom" Association="Self.FK_Renter_MotelRoom">
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+            <End Role="Renter" EntitySet="Renters" />
+          </AssociationSet>
+          <AssociationSet Name="Motel_Criteria" Association="Self.Motel_Criteria">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="MotelRoom" EntitySet="MotelRooms" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLTroModelStoreContainer" CdmEntityContainer="QLTroEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="QLTroModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="AccountStatusID" ColumnName="AccountStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccStatus">
+            <EntityTypeMapping TypeName="QLTroModel.AccStatu">
+              <MappingFragment StoreEntitySet="AccStatus">
+                <ScalarProperty Name="AccountStatusID" ColumnName="AccountStatusID" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="QLTroModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="BillID" ColumnName="BillID" />
+                <ScalarProperty Name="MotelID" ColumnName="MotelID" />
+                <ScalarProperty Name="RentDay" ColumnName="RentDay" />
+                <ScalarProperty Name="RentID" ColumnName="RentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillDetails">
+            <EntityTypeMapping TypeName="QLTroModel.BillDetail">
+              <MappingFragment StoreEntitySet="BillDetails">
+                <ScalarProperty Name="BillDetailsID" ColumnName="BillDetailsID" />
+                <ScalarProperty Name="BillID" ColumnName="BillID" />
+                <ScalarProperty Name="FromDay" ColumnName="FromDay" />
+                <ScalarProperty Name="ToDay" ColumnName="ToDay" />
+                <ScalarProperty Name="BillStatus" ColumnName="BillStatus" />
+                <ScalarProperty Name="RoomRates" ColumnName="RoomRates" />
+                <ScalarProperty Name="ElectricityPrice" ColumnName="ElectricityPrice" />
+                <ScalarProperty Name="WaterPrice" ColumnName="WaterPrice" />
+                <ScalarProperty Name="InternetPrice" ColumnName="InternetPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfirmEmails">
+            <EntityTypeMapping TypeName="QLTroModel.ConfirmEmail">
+              <MappingFragment StoreEntitySet="ConfirmEmail">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Criteria">
+            <EntityTypeMapping TypeName="QLTroModel.Criterion">
+              <MappingFragment StoreEntitySet="Criteria">
+                <ScalarProperty Name="CriteriaID" ColumnName="CriteriaID" />
+                <ScalarProperty Name="CriteriaName" ColumnName="CriteriaName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="QLTroModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="QLTroModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="MotelID" ColumnName="MotelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Infoes">
+            <EntityTypeMapping TypeName="QLTroModel.Info">
+              <MappingFragment StoreEntitySet="Info">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MotelRooms">
+            <EntityTypeMapping TypeName="QLTroModel.MotelRoom">
+              <MappingFragment StoreEntitySet="MotelRoom">
+                <ScalarProperty Name="MotelID" ColumnName="MotelID" />
+                <ScalarProperty Name="MotelName" ColumnName="MotelName" />
+                <ScalarProperty Name="Acreage" ColumnName="Acreage" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="MaxPeople" ColumnName="MaxPeople" />
+                <ScalarProperty Name="WardID" ColumnName="WardID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MotelStatus">
+            <EntityTypeMapping TypeName="QLTroModel.MotelStatu">
+              <MappingFragment StoreEntitySet="MotelStatus">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="QLTroModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+                <ScalarProperty Name="PostView" ColumnName="PostView" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="MotelID" ColumnName="MotelID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PostStatus" ColumnName="PostStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provinces">
+            <EntityTypeMapping TypeName="QLTroModel.Province">
+              <MappingFragment StoreEntitySet="Province">
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Renters">
+            <EntityTypeMapping TypeName="QLTroModel.Renter">
+              <MappingFragment StoreEntitySet="Renter">
+                <ScalarProperty Name="RentID" ColumnName="RentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="MotelID" ColumnName="MotelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wards">
+            <EntityTypeMapping TypeName="QLTroModel.Ward">
+              <MappingFragment StoreEntitySet="Ward">
+                <ScalarProperty Name="WardID" ColumnName="WardID" />
+                <ScalarProperty Name="WardName" ColumnName="WardName" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Motel_Criteria" TypeName="QLTroModel.Motel_Criteria" StoreEntitySet="Motel_Criteria">
+            <EndProperty Name="Criteria">
+              <ScalarProperty Name="CriteriaID" ColumnName="CriteriaID" />
+            </EndProperty>
+            <EndProperty Name="MotelRoom">
+              <ScalarProperty Name="MotelID" ColumnName="MotelID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

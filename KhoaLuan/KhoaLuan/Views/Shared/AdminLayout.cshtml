@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>@ViewBag.Title</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="all,follow">
+	<!-- Bootstrap CSS-->
+	<link href="/Content/Custom/custom-scrollbar.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/Content/Admin/vendor/bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome CSS-->
+	<link rel="stylesheet" href="~/Content/Admin/vendor/font-awesome/css/font-awesome.min.css">
+	<!-- Fontastic Custom icon font-->
+	<link rel="stylesheet" href="~/Content/Admin/css/fontastic.css">
+	<!-- Google fonts - Roboto -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+	<!-- jQuery Circle-->
+	<link rel="stylesheet" href="~/Content/Admin/css/grasp_mobile_progress_circle-1.0.0.min.css">
+	<!-- Custom Scrollbar-->
+	<link rel="stylesheet" href="~/Content/Admin/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+	<!-- theme stylesheet-->
+	<link rel="stylesheet" href="~/Content/Admin/css/style.default.css" id="theme-stylesheet">
+	<!-- Custom stylesheet - for your changes-->
+	<link rel="stylesheet" href="~/Content/Admin/css/custom.css">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="~/Content/Admin/img/favicon.ico">
+	<!-- Tweaks for older IEs-->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+@using KhoaLuan.Models;
+@{
+	var accountID = (Session["account"] as Account).AccountID;
+}
+<body>
+	<div>
+		<!-- Side Navbar -->
+		<nav class="side-navbar">
+			<div class="side-navbar-wrapper">
+				<!-- Sidebar Header    -->
+				<div class="sidenav-header d-flex align-items-center justify-content-center">
+					<!-- User Info-->
+					<div class="sidenav-header-inner text-center">
+						<h2 class="h5">@accountID</h2>
+					</div>
+					<!-- Small Brand information, appears on minimized sidebar-->
+					<div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center">@accountID</a></div>
+				</div>
+				<!-- Sidebar Navigation Menus-->
+				<div class="main-menu">
+					<h5 class="sidenav-heading">Quản lý tài khoản</h5>
+					<ul id="side-main-menu" class="side-menu list-unstyled">
+						<li class="@if (ViewBag.PageIndex == 0) { Write("active"); }"><a href="~/Admin/AllAccount"> <i class="icon-user"></i>Danh sách tài khoản</a></li>
+					</ul>
+				</div>
+				<div class="admin-menu">
+					<h5 class="sidenav-heading">Quản lý bài đăng</h5>
+					<ul id="side-admin-menu" class="side-menu list-unstyled">
+						<li class="@if (ViewBag.PageIndex == 1) { Write("active"); }"><a href="~/Admin/AllPost"> <i class="icon-list"> </i>Tất cả bài viết</a></li>
+						<li class="@if (ViewBag.PageIndex == 2) { Write("active"); }"><a href="~/Admin/PostForApproval"> <i class="icon-list"> </i>Bài viết chờ phê duyệt</a></li>
+					</ul>
+				</div>
+				<div class="admin-menu">
+					<h5 class="sidenav-heading">Quản lý tiêu chí tìm kiếm</h5>
+					<ul id="side-admin-menu" class="side-menu list-unstyled">
+						<li class="@if (ViewBag.PageIndex == 3) { Write("active"); }"><a href="~/Admin/AllCriteria"> <i class="icon-padnote"> </i>Danh sách tiêu chí tìm kiếm</a></li>
+					</ul>
+				</div>
+				<div class="admin-menu">
+					<h5 class="sidenav-heading">Tài khoản</h5>
+					<ul id="side-admin-menu" class="side-menu list-unstyled">
+						<li class="@if (ViewBag.PageIndex == 4) { Write("active"); }"> <a href="~/Account/ChangeInfo"> <i class="icon-user"> </i>Thông tin cá nhân</a></li>
+						<li class="@if (ViewBag.PageIndex == 5) { Write("active"); }"> <a href="~/Account/ChangePassWord"> <i class="icon-user"> </i>Đổi mật khẩu</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="page">
+			<!-- navbar-->
+			<header class="header">
+				<nav class="navbar">
+					<div class="container-fluid">
+						<div class="navbar-holder d-flex align-items-center justify-content-between">
+							<div class="navbar-header">
+								<a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="/" class="navbar-brand">
+									<div class="brand-text d-none d-md-inline-block"><strong class="text-primary">QuanLyTro</strong></div>
+								</a>
+							</div>
+							@{var totalPost = KhoaLuan.Bo.GetTotalPostForApproved.getTotalPost(); }
+							<ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+								<!-- Notifications dropdown-->
+								<li class="nav-item dropdown">
+									<a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">@if (totalPost != "0" ) { Write("1"); }</span></a>
+									<ul aria-labelledby="notifications" class="dropdown-menu">
+										<li>
+
+											<a rel="nofollow" href="#" class="dropdown-item">
+												<div class="notification d-flex justify-content-between">
+													<div class="notification-content"><i class="fa fa-envelope"></i>Có @{ if (totalPost != "0") { Write(totalPost); } else { Write("0"); } } cần phê duyệt </div>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- Log out-->
+								<li class="nav-item"><a href="~/Account/Logout" class="nav-link logout"> <span class="d-none d-sm-inline-block">Đăng xuất</span><i class="fa fa-sign-out"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</header>
+			<section>
+				@RenderBody()
+			</section>
+		</div>
+	</div>
+
+	@Html.Partial("_ModalPostInfo");
+
+	@Html.Partial("_ModalAccountInfo");
+
+	@Html.Partial("_ModalFeedBackDeletePost");
+
+	@Html.Partial("_ModalFeedBackDeleteAccount");
+
+	@Html.Partial("_NotificationModal")
+	<!-- JavaScript files-->
+	<script src="~/Content/Admin/vendor/jquery/jquery.min.js"></script>
+	<script src="~/Content/Admin/vendor/popper.js/umd/popper.min.js"></script>
+	<script src="~/Content/Admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="~/Content/Admin/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+	<script src="~/Content/Admin/vendor/jquery.cookie/jquery.cookie.js"></script>
+	<script src="~/Content/Admin/vendor/jquery-validation/jquery.validate.min.js"></script>
+	<script src="~/Content/Admin/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+	<!-- Main File-->
+	<script src="~/Content/Admin/js/front.js"></script>
+
+	<script src="~/Scripts/bootstrap/popper.min.js"></script>
+	<script src="~/Scripts/bootstrap/bootstrap.min.js"></script>
+	<script src="~/Scripts/plugins/dom-factory.js"></script>
+	<script src="~/Scripts/plugins/material-design-kit.js"></script>
+	<script src="~/Scripts/Custom/admin-post.js"></script>
+	<script src="~/Scripts/Custom/admin-account.js"></script>
+	<script src="~/Scripts/Custom/validate-change-password.js"></script>
+	<script src="~/Scripts/Custom/Criteria-manager.js"></script>
+	<script src="~/Scripts/Custom/ChangeInfo.js"></script>
+</body>
+</html>

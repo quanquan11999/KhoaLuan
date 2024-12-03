@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>@ViewBag.Title</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="all,follow">
+	<link href="/Content/Custom/custom-scrollbar.css" rel="stylesheet" />
+	<!-- Bootstrap CSS-->
+	<link rel="stylesheet" href="~/Content/Admin/vendor/bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome CSS-->
+	<link rel="stylesheet" href="~/Content/Admin/vendor/font-awesome/css/font-awesome.min.css">
+	<!-- Fontastic Custom icon font-->
+	<link rel="stylesheet" href="~/Content/Admin/css/fontastic.css">
+	<!-- Google fonts - Roboto -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+	<!-- Custom Scrollbar-->
+	<link rel="stylesheet" href="~/Content/Admin/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+	<!-- theme stylesheet-->
+	<link rel="stylesheet" href="~/Content/Admin/css/style.default.css" id="theme-stylesheet">
+	<!-- Custom stylesheet - for your changes-->
+	<link rel="stylesheet" href="~/Content/Admin/css/custom.css">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="~/Content/Admin/img/favicon.ico">
+
+	<!-- App CSS -->
+	<link type="text/css" href="~/Content/AdminThem/app.css" rel="stylesheet">
+</head>
+@using KhoaLuan.Models;
+@{
+	var accountID = (Session["account"] as Account).AccountID;
+}
+<body>
+	<div>
+		<!-- Side Navbar -->
+		<nav class="side-navbar">
+			<div class="side-navbar-wrapper">
+				<!-- Sidebar Header    -->
+				<div class="sidenav-header d-flex align-items-center justify-content-center">
+					<!-- User Info-->
+					<div class="sidenav-header-inner text-center">
+						<h2 class="h5">@accountID</h2>
+					</div>
+					<!-- Small Brand information, appears on minimized sidebar-->
+					<div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center">@accountID</a></div>
+				</div>
+				<!-- Sidebar Navigation Menus-->
+				<div class="admin-menu">
+					<h5 class="sidenav-heading">Tài khoản</h5>
+					<ul id="side-admin-menu" class="side-menu list-unstyled">
+						<li class="@if (ViewBag.PageIndex == 0){ Write("active");}"> <a href="~/Account/ChangeInfo"> <i class="icon-user"> </i>Thông tin cá nhân</a></li>
+						<li class="@if (ViewBag.PageIndex == 1){ Write("active");}"> <a href="~/Account/ChangePassWord"> <i class="icon-user"> </i>Đổi mật khẩu</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="page">
+			<!-- navbar-->
+			<header class="header">
+				<nav class="navbar">
+					<div class="container-fluid">
+						<div class="navbar-holder d-flex align-items-center justify-content-between">
+							<div class="navbar-header">
+								<a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="/" class="navbar-brand">
+									<div class="brand-text d-none d-md-inline-block"><strong class="text-primary">QUANLYTRO</strong></div>
+								</a>
+							</div>
+							<ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+								<!-- Notifications dropdown-->
+								@*<li class="nav-item dropdown">
+									<a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>
+									<ul aria-labelledby="notifications" class="dropdown-menu">
+										<li>
+											<a rel="nofollow" href="#" class="dropdown-item">
+												<div class="notification d-flex justify-content-between">
+													<div class="notification-content"><i class="fa fa-envelope"></i>You have 6 new messages </div>
+													<div class="notification-time"><small>4 minutes ago</small></div>
+												</div>
+											</a>
+										</li>
+
+										<li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-bell"></i>view all notifications                                            </strong></a></li>
+									</ul>
+								</li>*@
+								<!-- Log out-->
+								<li class="nav-item"><a href="~/Account/Logout" class="nav-link logout"> <span class="d-none d-sm-inline-block">Đăng xuất</span><i class="fa fa-sign-out"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</header>
+			<section>
+				@RenderBody()
+			</section>
+		</div>
+	</div>
+
+	<!-- Modal Thong tin bai viet -->
+	<div class="modal fade" id="modalPostInfo" tabindex="-1" role="dialog" style="padding-left: 0px;">
+		<div class="modal-dialog" role="document" style="width: 100%; max-width: 1024px; margin: 3px auto;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Thông tin bài đăng</h5>
+					<button type="button" id="closeModalPostInfo" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body p-0">
+					<div class="row">
+						<div class="col-sm-12 col-md-6 pt-1 pb-1 pl-3">
+							<table class="table table-bordered mb-0">
+								<tbody>
+									<tr>
+										<td class="field">Tiêu đề :</td>
+										<td id="titleModal"></td>
+									</tr>
+									<tr>
+										<td class="field">Thời điểm đăng :</td>
+										<td id="postDayModal"></td>
+									</tr>
+									<tr>
+										<td class="field">Địa chỉ :</td>
+										<td id="addressModal"></td>
+									</tr>
+									<tr>
+										<td class="field">Diện tích :</td>
+										<td id="acreageModal"><sup>2</sup></td>
+									</tr>
+									<tr>
+										<td class="field">Giá thuê :</td>
+										<td id="priceModal"></td>
+									</tr>
+									<tr>
+										<td class="field">Tiện nghi :</td>
+										<td id="extensionModal"></td>
+									</tr>
+									<tr>
+										<td class="field">Mô tả :</td>
+										<td id="descriptionModal"></td>
+									</tr>
+									<tr>
+										<td class="field">Số người tối đa :</td>
+										<td id="maxPeopleModal"></td>
+									</tr>
+									<tr>
+										<td class="field">Số điện thoại :</td>
+										<td id="phoneModal"></td>
+									</tr>
+									<tr>
+										<td class="field">Email :</td>
+										<td id="emailModal"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-sm-12 col-md-6 d-flex align-items-center">
+							<div id="carouselId" class="carousel slide pr-sm-0 pr-md-4" data-ride="carousel">
+								<ol class="carousel-indicators">
+									@* indicators will show here *@
+								</ol>
+								<div class="carousel-inner" role="listbox">
+									@* images will show here *@
+								</div>
+								<a class="carousel-control-prev" href="#carouselId" role="button" data-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="#carouselId" role="button" data-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" post-id="" class="btn btn-sm btn-danger w-25 ml-3" title="Xóa bài viết này"
+							data-toggle="modal" data-target="#modalSendMessage"
+							data-dismiss="modal" id="btnDelete">
+						Xóa
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ##### Left side bar ##### -->
+	<div class="mdk-drawer js-mdk-drawer" id="default-drawer">
+		<div class="mdk-drawer__content">
+			<div class="mdk-drawer__inner" data-simplebar data-simplebar-force-enabled="true">
+				<nav class="drawer  drawer--dark">
+					<div class="drawer-spacer">
+						<div class="media align-items-center">
+							<a href="index.html" class="drawer-brand-circle mr-2">S</a>
+							<div class="media-body">
+								<a href="javascript:void()" class="h5 m-0 text-link">Chào mừng:<b> @{if (Session["accountName"] != null) { Write(Session["accountName"]); } }</b></a>
+							</div>
+						</div>
+					</div>
+
+					<!-- ##### HEADING Quản lý bài đăng ##### -->
+					<div class="py-2 drawer-heading">
+						Quản lý bài viết
+					</div>
+
+					<!-- MENU -->
+					<ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+						<li class="drawer-menu-item @if (ViewBag.PageIndex == 0) { Write("drawer-menu-item-active"); } ">
+							<a href="~/Posts/AllPosts">
+								<i class="material-icons">pages</i>
+								<span class="drawer-menu-text"> Tất cả bài viết</span>
+							</a>
+						</li>
+						<li class="drawer-menu-item @if (ViewBag.PageIndex == 1) { Write("drawer-menu-item-active"); } ">
+							<a href="~/Posts/UploadPost">
+								<i class="material-icons">pages</i>
+								<span class="drawer-menu-text"> Đăng bài viết</span>
+							</a>
+						</li>
+					</ul>
+
+					<!-- ##### HEADING Quản lý bài đăng ##### -->
+					<div class="py-2 drawer-heading">
+						Tài khoản
+					</div>
+
+					<!-- MENU -->
+					<ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+						<li class="drawer-menu-item @if (ViewBag.PageIndex == 2) { Write("drawer-menu-item-active"); }">
+							<a href="~/Account/ChangePassWord">
+								<i class="material-icons">pages</i>
+								<span class="drawer-menu-text"> Đổi mật khẩu</span>
+							</a>
+						</li>
+						<li class="drawer-menu-item ">
+							<a href="/Account/Logout">
+								<i class="material-icons">pages</i>
+								<span class="drawer-menu-text"> Đăng xuất</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<!-- // END left side bar -->
+	@Html.Partial("_NotificationModal")
+	<!-- JavaScript files-->
+	<script src="~/Content/Admin/vendor/jquery/jquery.min.js"></script>
+	<script src="~/Content/Admin/vendor/popper.js/umd/popper.min.js"></script>
+	<script src="~/Content/Admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="~/Content/Admin/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+	<script src="~/Content/Admin/vendor/jquery.cookie/jquery.cookie.js"></script>
+	<script src="~/Content/Admin/vendor/jquery-validation/jquery.validate.min.js"></script>
+	<script src="~/Content/Admin/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+	<!-- Main File-->
+	<script src="~/Content/Admin/js/front.js"></script>
+
+	<script src="~/Scripts/plugins/dom-factory.js"></script>
+	<script src="~/Scripts/plugins/material-design-kit.js"></script>
+	<script src="~/Scripts/Custom/admin-post.js"></script>
+	<script src="~/Scripts/Custom/admin-account.js"></script>
+	<script src="~/Scripts/Custom/validate-change-password.js"></script>
+	<script src="~/Scripts/Custom/upload-image.js"></script>
+	<script src="~/Scripts/Custom/validate-upload-post.js"></script>
+	<script src="~/Scripts/Custom/ChangeInfo.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,105 @@
+﻿@model IEnumerable<KhoaLuan.Models.MotelRoom>
+@{
+	ViewBag.Title = "Đăng bài viết mới";
+	ViewBag.PageIndex = 1;
+	Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+@Styles.Render("~/Content/Custom/share.css")
+@Styles.Render("~/Content/Custom/upload-post.css")
+
+<style>
+	.form-control {
+		display: block;
+		width: 100%;
+		padding: 0.5rem 0.8rem;
+		font-size: 0.875rem;
+		line-height: 1.2;
+		color: #495057;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #DBE5EE;
+		border-radius: 0.25rem;
+	}
+</style>
+<div class="mdk-header-layout__content top-navbar mdk-header-layout__content--scrollable h-100">
+	<div class="container" style="margin-left: 0px;">
+		<center>
+			<h3 style="padding-top:20px">Đăng Bài Viết Mới</h3>
+		</center>
+		<br>
+		<form action="/User/UploadPost" method="post" enctype="multipart/form-data" onsubmit="return validateDataUploadPost()">
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="postTitle">Chọn phòng trọ:</label>
+				</div>
+				<div class="col-sm-12 col-md-10">
+					<select class="form-control" name="selectMotelID" id="selectMotelID">
+						<option value="0">Chọn phòng để đăng bài</option>
+						@foreach (var item in Model)
+						{
+							<option value="@item.MotelID">@item.MotelName</option>
+						}
+					</select>
+					<span class="error-message" id="motelIDErrorMessage">
+						<i class="material-icons">error</i> Phải chọn phòng.
+					</span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="postTitle">Tiêu đề:</label>
+				</div>
+				<div class="col-sm-12 col-md-10">
+					<input type="text" name="postTitle" id="postTitle" class="form-control" />
+					<span class="error-message" id="postTitleErrorMessage">
+						<i class="material-icons">error</i> Phải nhập tiêu đề.
+					</span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="description">Mô tả:</label>
+				</div>
+				<div class="col-sm-12 col-md-10">
+					<textarea id="description" name="description" class="form-control" rows="5"></textarea>
+					<span class="error-message" id="descriptionErrorMessage">
+						<i class="material-icons">error</i> Phải nhập mô tả về trọ.
+					</span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-12 col-md-2 text-sm-left text-md-right pt-1">
+					<label for="imageList">Hình ảnh:</label>
+				</div>
+				<div class="col-sm-12 col-md-10">
+					<label class="form-control cursor">
+						Chọn ảnh ... <input type="file" id="imageList" name="imageList[]" class="form-control" style="display:none" multiple accept="image/*" formenctype="multipart/form-data" />
+					</label>
+					<span class="error-message" id="imageListErrorMessage">
+						<i class="material-icons">error</i> Phải tải lên ít nhất một ảnh.
+					</span>
+				</div>
+			</div>
+
+			<div class="row form-group">
+				<div class="col-sm-0 col-md-2"></div>
+				<div class="col-sm-12 col-md-10">
+					<div id="image_holder" class="d-flex justify-content-start align-items-center flex-wrap">
+						@* Image will show here *@
+					</div>
+				</div>
+			</div>
+
+			<div class="row form-group">
+				<div class="col-sm-0 col-md-2"></div>
+				<div class="col-sm-12 col-md-10">
+					<center><input type="submit" class="btn btn-sm btn-primary w-100" value="Đăng" /></center>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
