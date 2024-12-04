@@ -87,7 +87,7 @@
           <Property Name="Sex" Type="bit" />
           <Property Name="Birthday" Type="date" />
           <Property Name="Phone" Type="nvarchar" MaxLength="10" />
-          <Property Name="Email" Type="nvarchar" MaxLength="30" />
+          <Property Name="Email" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="ProvinceID" Type="int" />
           <Property Name="DistrictID" Type="int" />
         </EntityType>
@@ -193,7 +193,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_Renter">
-          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Renter">
@@ -205,7 +207,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BillDetails_Bill">
-          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bill">
@@ -257,7 +261,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Info_ConfirmEmail">
-          <End Role="ConfirmEmail" Type="Self.ConfirmEmail" Multiplicity="0..1" />
+          <End Role="ConfirmEmail" Type="Self.ConfirmEmail" Multiplicity="1" />
           <End Role="Info" Type="Self.Info" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ConfirmEmail">
@@ -591,7 +595,7 @@
           <Property Name="Sex" Type="Boolean" />
           <Property Name="Birthday" Type="DateTime" Precision="0" />
           <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProvinceID" Type="Int32" />
           <Property Name="DistrictID" Type="Int32" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Info_Account" FromRole="Info" ToRole="Account" />
@@ -737,7 +741,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_Renter">
-          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Renter">
@@ -749,7 +755,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BillDetails_Bill">
-          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bill">
@@ -761,7 +769,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Info_ConfirmEmail">
-          <End Role="ConfirmEmail" Type="Self.ConfirmEmail" Multiplicity="0..1" />
+          <End Role="ConfirmEmail" Type="Self.ConfirmEmail" Multiplicity="1" />
           <End Role="Info" Type="Self.Info" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ConfirmEmail">

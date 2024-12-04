@@ -196,6 +196,7 @@
         var sex = $('#sex').val();
         var province = $('#province').val();
         var district = $('#district').val();
+        toggleLoading()
         $.ajax({
             async: false,
             type: "POST",
@@ -215,6 +216,7 @@
                 $('#contentNotification').html("Đã lưu thay đổi");
             }
         });
+        toggleLoading()
     });
 
     setInterval(function () {
@@ -232,6 +234,7 @@
 
     function loadProvince() {
         var listProvince;
+        toggleLoading()
         $.ajax({
             async: false,
             type: "POST",
@@ -241,11 +244,13 @@
                 listProvince = response.result;
             }
         });
+        toggleLoading()
         return listProvince;
     }
 
     function loadProvinceName(provinceID) {
         var provinceName = "";
+        toggleLoading()
         $.ajax({
             async: false,
             type: "POST",
@@ -256,11 +261,13 @@
                 provinceName = response.result;
             }
         });
+        toggleLoading()
         return provinceName;
     }
 
     function loadDistrict(provinceID) {
         var listDistrictOfprovince;
+        toggleLoading()
         $.ajax({
             async: false,
             type: "POST",
@@ -271,11 +278,13 @@
                 listDistrictOfprovince = response.result;
             }
         });
+        toggleLoading()
         return listDistrictOfprovince;
     }
 
     function loadDistrictName(districtID) {
         var districtName;
+        toggleLoading()
         $.ajax({
             async: false,
             type: "POST",
@@ -286,6 +295,7 @@
                 districtName = response.result;
             }
         });
+        toggleLoading()
         return districtName;
     }
 });
