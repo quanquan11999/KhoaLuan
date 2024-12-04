@@ -1,125 +1,137 @@
 ﻿@model IEnumerable<KhoaLuan.ViewModels.PostViewModel>
 @{
-	ViewBag.Title = "Kết quả tìm kiếm";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Kết quả tìm kiếm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.Partial("_SearchBar")
 
 <style>
-	.page-link {
-		color: #ef1b48;
-	}
+    .page-link {
+        color: #ef1b48;
+    }
 
-		.page-link:hover {
-			color: #000;
-		}
+        .page-link:hover {
+            color: #000;
+        }
 
-	.page-item.active .page-link {
-		background: #ef1b48 !important;
-		color: #fff !important;
-		border-color: #ef1b48 !important;
-	}
+    .page-item.active .page-link {
+        background: #ef1b48 !important;
+        color: #fff !important;
+        border-color: #ef1b48 !important;
+    }
 
-	.hvr-float {
-		display: inline-block;
-		vertical-align: middle;
-		-webkit-transform: perspective(1px) translateZ(0);
-		transform: perspective(1px) translateZ(0);
-		box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-		-webkit-transition-duration: 0.3s;
-		transition-duration: 0.3s;
-		-webkit-transition-property: transform;
-		transition-property: transform;
-		-webkit-transition-timing-function: ease-out;
-		transition-timing-function: ease-out;
-	}
+    .hvr-float {
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        -webkit-transition-property: transform;
+        transition-property: transform;
+        -webkit-transition-timing-function: ease-out;
+        transition-timing-function: ease-out;
+    }
 
-		.hvr-float:hover, .hvr-float:focus, .hvr-float:active {
-			-webkit-transform: translateY(-8px);
-			transform: translateY(-8px);
-		}
+        .hvr-float:hover, .hvr-float:focus, .hvr-float:active {
+            -webkit-transform: translateY(-8px);
+            transform: translateY(-8px);
+        }
 </style>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <!-- ##### Search Result Start ##### -->
 <div class="news-area section-padding-100-70">
-	<div class="container">
-		<div class="row">
-			<div class="col-12 col-md-8 col-lg-9">
-				<!-- Tags -->
-				<h3 class="my-text-primary">
-					Kết quả tìm kiếm
-				</h3>
-				<div class="">
-					<span class="badge badge-dark">
-						@ViewBag.province
-					</span>
-					<span class="badge badge-dark">
-						@ViewBag.district
-					</span>
-				</div>
-				<br>
-				<!-- ### Ket qua tim kiem ### -->
-				<!-- Single News Area -->
-				@if ((Model == null) || (Model.Count() == 0))
-				{
-					<div class="alert-warning p-3 mb-5 d-flex">
-						<i class="material-icons">error</i>
-						<span style="font-weight: 600;">Không tìm thấy kết quả !</span>
-					</div>
-				}
-				else
-				{
-					<div style="padding-top: 5px; padding-bottom: 15px">
-						<a class="btn btn-sm btn-outline-secondary @{if (ViewBag.Order == "desc") { Write(" active"); }}"
-						   style="font-size: 12px; font-weight: normal;"
-						   href="~/Posts/SearchResult?PageNumber=@ViewBag.PageNumber&order=desc">Giá giảm dần</a>
-						<a class="btn btn-sm btn-outline-secondary @{if (ViewBag.Order == "asc") { Write(" active"); }}"
-						   style="font-size: 12px; font-weight: normal;"
-						   href="~/Posts/SearchResult?PageNumber=@ViewBag.PageNumber&order=asc">Giá tăng dần</a>
-					</div>
-					foreach (var item in Model)
-					{
-						var url = "6.jpg"; if (item.ImageList.Count > 0)
-						{
-							url = item.ImageList[0];
-						}
-						<div class="single-blog-post d-flex flex-wrap style-5 mb-30 border border-secondary hvr-float">
-							<!-- Blog Thumbnail -->
-							<div class="blog-thumbnail">
-								<a href="/Posts/PostDetails?postID=@item.Post.PostID">
-									<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
-								</a>
-							</div>
-							<!-- Blog Content -->
-							<div class="blog-content pt-sm-0 pt-md-3 pl-2 pb-2 pr-2">
-								<div class="d-flex justify-content-between align-items-center">
-									<span class="post-date d-flex align-items-center">
-										<i class="material-icons pr-1" style="font-size : 14px">access_time</i>&nbsp;@item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
-									</span>
-									<span class="post-view-rate d-flex align-items-center">
-										<i class="material-icons" style="font-size : 14px">visibility</i>&nbsp; @item.Post.PostView lượt xem
-									</span>
-								</div>
-								<a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title d-flex align-items-center mb-0">
-									<i class="material-icons" style="font-size : 14px">filter_frames</i>&nbsp;@item.Post.PostTitle
-								</a>
-								<span class="post-price d-flex align-items-center mb-1">
-									<i class="material-icons pr-1" style="font-size : 14px">money</i>&nbsp;<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/ tháng
-								</span>
-								<span class="post-author d-flex align-items-center">
-									<i class="material-icons" style="font-size : 14px">person</i>
-									&nbsp; @item.Post.Name
-								</span>
-								<div><i class="material-icons" style="font-size : 14px">place</i>&nbsp @item.Post.WardName</div>
-								<div style="margin-top:5%">
-									<label class="text-dark">
-										@item.Post.Description
-									</label><br>
-								<span class="alert-warning pl-3 pr-3">Xem thêm... </span> 
-								</div>
-								<br />
-								<script>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8 col-lg-9">
+                <!-- Tags -->
+                <h3 class="my-text-primary">
+                    Kết quả tìm kiếm
+                </h3>
+                <div class="">
+                    <span class="badge badge-dark">
+                        @ViewBag.province
+                    </span>
+                    <span class="badge badge-dark">
+                        @ViewBag.district
+                    </span>
+                </div>
+                <br>
+                <!-- ### Ket qua tim kiem ### -->
+                <!-- Single News Area -->
+                @using (Html.BeginForm("SearchResult", "Posts", FormMethod.Post, new { @class = "filter-form" }))
+                {
+                    <div class="filter-options">
+                        <label>
+                            <input type="radio" name="order" value="desc" @(ViewBag.Order == "desc" ? "checked" : "") />
+                            Giá giảm dần
+                        </label>
+                        <label>
+                            <input type="radio" name="order" value="asc" @(ViewBag.Order == "asc" ? "checked" : "") />
+                            Giá tăng dần
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="maxPeople">Số người tối đa:</label>
+                        <input type="number" id="maxPeople" name="maxPeople" class="form-control"
+                               value="@(ViewBag.MaxPeople ?? 0)" />
+                    </div>     
+                    <button type="submit" class="btn btn-primary mt-2">Lọc</button>
+                }
+                @if ((Model == null) || (Model.Count() == 0))
+                {
+                    <div class="alert-warning p-3 mb-5 d-flex">
+                        <i class="material-icons">error</i>
+                        <span style="font-weight: 600;">Không tìm thấy kết quả !</span>
+                    </div>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        var url = "6.jpg"; if (item.ImageList.Count > 0)
+                        {
+                            url = item.ImageList[0];
+                        }
+                        <div class="single-blog-post d-flex flex-wrap style-5 mb-30 border border-secondary hvr-float">
+                            <!-- Blog Thumbnail -->
+                            <div class="blog-thumbnail">
+                                <a href="/Posts/PostDetails?postID=@item.Post.PostID">
+                                    <img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+                                </a>
+                            </div>
+                            <!-- Blog Content -->
+                            <div class="blog-content pt-sm-0 pt-md-3 pl-2 pb-2 pr-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="post-date d-flex align-items-center">
+                                        <i class="material-icons pr-1" style="font-size : 14px">access_time</i>&nbsp;@item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+                                    </span>
+                                    <span class="post-view-rate d-flex align-items-center">
+                                        <i class="material-icons" style="font-size : 14px">visibility</i>&nbsp; @item.Post.PostView lượt xem
+                                    </span>
+                                </div>
+                                <a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title d-flex align-items-center mb-0">
+                                    <i class="material-icons" style="font-size : 14px">filter_frames</i>&nbsp;@item.Post.PostTitle
+                                </a>
+                                <span class="post-price d-flex align-items-center mb-1">
+                                    <i class="material-icons pr-1" style="font-size : 14px">money</i>&nbsp;<b>@String.Format("{0:0,0}", item.Post.Price) VND</b>/ tháng
+                                </span>
+                                <span class="post-author d-flex align-items-center">
+                                    <i class="material-icons" style="font-size : 14px">person</i>
+                                    &nbsp; @item.Post.Name
+                                </span>
+                                <div><i class="material-icons" style="font-size : 14px">place</i>&nbsp @item.Post.WardName</div>
+                                <div style="margin-top:5%">
+                                    <label class="text-dark">
+                                        @item.Post.Description
+                                    </label><br>
+                                    <span class="alert-warning pl-3 pr-3">Xem thêm... </span>
+                                </div>
+                                <br />
+                                <script>
                         function calcCrow(lat1, lon1, lat2, lon2) {
                             var R = 6371; // km
                             var dLat = toRad(lat2 - lat1);
@@ -149,141 +161,141 @@
 							}
 							navigator.geolocation.getCurrentPosition(showcoor);
                         });
-								</script>
-							</div>
-						</div>
-					}
-				}
+                                </script>
+                            </div>
+                        </div>
+                    }
+                }
 
-				<!-- Pagination -->
-				@if ((Model != null) && (Model.Count() > 0))
-				{
-					<nav aria-label="Page navigation">
-						<ul class="pagination justify-content-center py-5">
-							@if (ViewBag.PageNumber <= 1)
-							{
-								<li class="page-item disabled">
-									<a class="page-link" aria-label="Previous" href="/Posts/SearchResult?PageNumber=@{ Write(ViewBag.PageNumber - 1); }&order=@ViewBag.Order ">
-										<span aria-hidden="true">&laquo;</span>
-										<span class="sr-only">Previous</span>
-									</a>
-								</li>
-							}
-							else
-							{
-								<li class="page-item">
-									<a class="page-link" aria-label="Previous" href="/Posts/SearchResult?PageNumber=@{ Write(ViewBag.PageNumber - 1); }&order=@ViewBag.Order ">
-										<span aria-hidden="true">&laquo;</span>
-										<span class="sr-only">Previous</span>
-									</a>
-								</li>
-							}
+                <!-- Pagination -->
+                @if ((Model != null) && (Model.Count() > 0))
+                {
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center py-5">
+                            @if (ViewBag.PageNumber <= 1)
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link" aria-label="Previous" href="/Posts/SearchResult?PageNumber=@{ Write(ViewBag.PageNumber - 1); }&order=@ViewBag.Order ">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" aria-label="Previous" href="/Posts/SearchResult?PageNumber=@{ Write(ViewBag.PageNumber - 1); }&order=@ViewBag.Order ">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                            }
 
-							@for (int i = 1; i <= ViewBag.TotalPage; i++)
-							{
-								if ((ViewBag.PageNumber == i) || (ViewBag.PageNumber < 1))
-								{
-									<li id="page" class="page-item active">
-										@Html.ActionLink(i.ToString(), "SearchResult", "Posts", new { PageNumber = i, order = ViewBag.Order }, htmlAttributes: new { @class = "page-link" })
-									</li>
-								}
-								else
-								{
-									<li id="page" class="page-item">
-										@Html.ActionLink(i.ToString(), "SearchResult", "Posts", new { PageNumber = i, order = ViewBag.Order }, htmlAttributes: new { @class = "page-link" })
-									</li>
-								}
-							}
+                            @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                            {
+                                if ((ViewBag.PageNumber == i) || (ViewBag.PageNumber < 1))
+                                {
+                                    <li id="page" class="page-item active">
+                                        @Html.ActionLink(i.ToString(), "SearchResult", "Posts", new { PageNumber = i, order = ViewBag.Order }, htmlAttributes: new { @class = "page-link" })
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li id="page" class="page-item">
+                                        @Html.ActionLink(i.ToString(), "SearchResult", "Posts", new { PageNumber = i, order = ViewBag.Order }, htmlAttributes: new { @class = "page-link" })
+                                    </li>
+                                }
+                            }
 
-							@if (ViewBag.PageNumber == ViewBag.TotalPage)
-							{
-								<li class="page-item disabled">
-									<a class="page-link" aria-label="Next" href="/Posts/SearchResult?PageNumber=@{ Write(ViewBag.PageNumber + 1); }&order=@ViewBag.Order">
-										<span aria-hidden="true">&raquo;</span>
-										<span class="sr-only">Next</span>
-									</a>
-								</li>
-							}
-							else
-							{
-								<li class="page-item">
-									<a class="page-link" aria-label="Next" href="/Posts/SearchResult?PageNumber=@{ Write(ViewBag.PageNumber + 1); }&order=@ViewBag.Order">
-										<span aria-hidden="true">&raquo;</span>
-										<span class="sr-only">Next</span>
-									</a>
-								</li>
-							}
-						</ul>
-					</nav>
-				}
-			</div>
-			@using KhoaLuan.ViewModels;
-			@{
-				var listPosstViewModel = new List<PostViewModel>();
-				using (var db = new KhoaLuan.Models.QLTroEntities())
-				{
-					var month = DateTime.Now.Month;
-					var year = DateTime.Now.Year;
-					var listResult = SearchResult.CreateListSearchResult().Where(p => p.PostDate.Value.Month == month && p.PostDate.Value.Year == year).OrderBy(p => p.PostDate).ToList();
-					listPosstViewModel = PostViewModel.CreateListPostViewModel(listResult);
-				}
-				<!-- Post this month -->
-				<div class="col-12 col-md-4 col-lg-3">
-					<h3 class="my-text-primary mb-4">Tin tháng này</h3>
+                            @if (ViewBag.PageNumber == ViewBag.TotalPage)
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link" aria-label="Next" href="/Posts/SearchResult?PageNumber=@{ Write(ViewBag.PageNumber + 1); }&order=@ViewBag.Order">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" aria-label="Next" href="/Posts/SearchResult?PageNumber=@{ Write(ViewBag.PageNumber + 1); }&order=@ViewBag.Order">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+            @using KhoaLuan.ViewModels;
+            @{
+                var listPosstViewModel = new List<PostViewModel>();
+                using (var db = new KhoaLuan.Models.QLTroEntities())
+                {
+                    var month = DateTime.Now.Month;
+                    var year = DateTime.Now.Year;
+                    var listResult = SearchResult.CreateListSearchResult().Where(p => p.PostDate.Value.Month == month && p.PostDate.Value.Year == year).OrderBy(p => p.PostDate).ToList();
+                    listPosstViewModel = PostViewModel.CreateListPostViewModel(listResult);
+                }
+                <!-- Post this month -->
+                <div class="col-12 col-md-4 col-lg-3">
+                    <h3 class="my-text-primary mb-4">Tin tháng này</h3>
 
-					<!-- Single News Area -->
-					@if (listPosstViewModel != null)
-					{
-						var i = 0;
-						foreach (var item in listPosstViewModel)
-						{
-							if (i == 4) { break; }
-							var url = "6.jpg"; if (item.ImageList.Count > 0)
-							{
-								url = item.ImageList[0];
-							}
-							<div class="single-blog-post style-2 mb-5">
-								<!-- Blog Thumbnail -->
-								<div class="blog-thumbnail">
-									<a href="/Posts/PostDetails?postID=@item.Post.PostID">
-										<img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
-									</a>
-								</div>
+                    <!-- Single News Area -->
+                    @if (listPosstViewModel != null)
+                    {
+                        var i = 0;
+                        foreach (var item in listPosstViewModel)
+                        {
+                            if (i == 4) { break; }
+                            var url = "6.jpg"; if (item.ImageList.Count > 0)
+                            {
+                                url = item.ImageList[0];
+                            }
+                            <div class="single-blog-post style-2 mb-5">
+                                <!-- Blog Thumbnail -->
+                                <div class="blog-thumbnail">
+                                    <a href="/Posts/PostDetails?postID=@item.Post.PostID">
+                                        <img src="~/Content/Images/Houserent/@url" alt="Thumbnail">
+                                    </a>
+                                </div>
 
-								<!-- Blog Content -->
-								<div class="blog-content">
-									<div class="d-flex justify-content-between">
-										<span class="post-date d-flex align-items-center">
-											<i class="material-icons" style="font-size : 14px">access_time</i>
-											&nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
-										</span>
-										<span class="post-view-rate d-flex align-items-center">
-											<i class="material-icons" style="font-size : 14px">visibility</i>
-											&nbsp; @item.Post.PostView lượt xem
-										</span>
-									</div>
-									<a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title">
-										@item.Post.PostTitle
-									</a>
-									<span class="post-price d-flex align-items-center mb-1">
-										<i class="material-icons pr-2" style="font-size : 14px">money</i><b>@String.Format("{0:0,0}", item.Post.Price)</b>
-										/ tháng
-									</span>
-									<span class="post-author d-flex align-items-center">
-										<i class="material-icons pr-1" style="font-size : 14px">person</i>
-										&nbsp; Đăng bởi: @item.Post.Name
-									</span>
-								</div>
-							</div>
-							i++;
-						}
-						<div class="single-blog-post style-6 mb-30">
+                                <!-- Blog Content -->
+                                <div class="blog-content">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="post-date d-flex align-items-center">
+                                            <i class="material-icons" style="font-size : 14px">access_time</i>
+                                            &nbsp; @item.Post.PostDate.Value.ToString("dd/M/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+                                        </span>
+                                        <span class="post-view-rate d-flex align-items-center">
+                                            <i class="material-icons" style="font-size : 14px">visibility</i>
+                                            &nbsp; @item.Post.PostView lượt xem
+                                        </span>
+                                    </div>
+                                    <a href="/Posts/PostDetails?postID=@item.Post.PostID" class="post-title">
+                                        @item.Post.PostTitle
+                                    </a>
+                                    <span class="post-price d-flex align-items-center mb-1">
+                                        <i class="material-icons pr-2" style="font-size : 14px">money</i><b>@String.Format("{0:0,0}", item.Post.Price)</b>
+                                        / tháng
+                                    </span>
+                                    <span class="post-author d-flex align-items-center">
+                                        <i class="material-icons pr-1" style="font-size : 14px">person</i>
+                                        &nbsp; Đăng bởi: @item.Post.Name
+                                    </span>
+                                </div>
+                            </div>
+                            i++;
+                        }
+                        <div class="single-blog-post style-6 mb-30">
 
-						</div>
-					}
-				</div>
-			}
-		</div>
-	</div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
 </div>
 <!-- ##### Search result End ##### -->
