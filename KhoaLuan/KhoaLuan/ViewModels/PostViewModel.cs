@@ -61,5 +61,41 @@ namespace KhoaLuan.ViewModels
             }
             return list;
         }
+
+        public static List<PostViewModel> CreateListPostViewModel(int provinceID, int districtID, int maxPeople, List<int> lstIdPostWithCriteria)
+        {
+            List<PostViewModel> list = new List<PostViewModel>();
+            using (var db = new QLTroEntities())
+            {
+                var searchResult = SearchResult.CreateListSearchResult()
+                    .Where(p => p.ProvinceID == provinceID && p.DistrictID == districtID
+                    && p.AccountStatus == 1 && p.PostStatus == true)
+                    .ToList();
+                if (maxPeople > 0)
+                {
+                    searchResult = searchResult.Where(x => x.MaxPeople <= maxPeople).ToList();
+                }
+                if (lstIdPostWithCriteria != null && lstIdPostWithCriteria.Count > 0)
+                {
+                    searchResult = searchResult.Where(x => lstIdPostWithCriteria.Contains((int)x.MotelID)).ToList();
+                }
+                else
+                {
+                    searchResult.Clear();
+                }
+                if (searchResult != null && searchResult.Count > 0)
+                {
+                    foreach (var item in searchResult)
+                    {
+                        list.Add(new PostViewModel()
+                        {
+                            Post = item,
+                            ImageList = GetImage.getListImage(item.MotelID)
+                        });
+                    }
+                }
+            }
+            return list;
+        }
     }
 }

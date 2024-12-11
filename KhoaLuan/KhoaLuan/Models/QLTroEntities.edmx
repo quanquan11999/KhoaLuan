@@ -91,7 +91,7 @@
           <Property Name="ProvinceID" Type="int" />
           <Property Name="DistrictID" Type="int" />
         </EntityType>
-        <EntityType Name="Motel_Criteria">
+        <EntityType Name="MotelCriteria">
           <Key>
             <PropertyRef Name="MotelID" />
             <PropertyRef Name="CriteriaID" />
@@ -272,30 +272,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Motel_Criteria_Criteria">
+        <Association Name="FK_MotelCriteria_Criteria">
           <End Role="Criteria" Type="Self.Criteria" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Motel_Criteria" Type="Self.Motel_Criteria" Multiplicity="*" />
+          <End Role="MotelCriteria" Type="Self.MotelCriteria" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Criteria">
               <PropertyRef Name="CriteriaID" />
             </Principal>
-            <Dependent Role="Motel_Criteria">
+            <Dependent Role="MotelCriteria">
               <PropertyRef Name="CriteriaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Motel_Criteria_MotelRoom">
+        <Association Name="FK_MotelCriteria_MotelRoom">
           <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Motel_Criteria" Type="Self.Motel_Criteria" Multiplicity="*" />
+          <End Role="MotelCriteria" Type="Self.MotelCriteria" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MotelRoom">
               <PropertyRef Name="MotelID" />
             </Principal>
-            <Dependent Role="Motel_Criteria">
+            <Dependent Role="MotelCriteria">
               <PropertyRef Name="MotelID" />
             </Dependent>
           </ReferentialConstraint>
@@ -414,7 +414,7 @@
           <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Info" EntityType="Self.Info" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Motel_Criteria" EntityType="Self.Motel_Criteria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MotelCriteria" EntityType="Self.MotelCriteria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MotelRoom" EntityType="Self.MotelRoom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MotelStatus" EntityType="Self.MotelStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
@@ -453,13 +453,13 @@
             <End Role="ConfirmEmail" EntitySet="ConfirmEmail" />
             <End Role="Info" EntitySet="Info" />
           </AssociationSet>
-          <AssociationSet Name="FK_Motel_Criteria_Criteria" Association="Self.FK_Motel_Criteria_Criteria">
+          <AssociationSet Name="FK_MotelCriteria_Criteria" Association="Self.FK_MotelCriteria_Criteria">
             <End Role="Criteria" EntitySet="Criteria" />
-            <End Role="Motel_Criteria" EntitySet="Motel_Criteria" />
+            <End Role="MotelCriteria" EntitySet="MotelCriteria" />
           </AssociationSet>
-          <AssociationSet Name="FK_Motel_Criteria_MotelRoom" Association="Self.FK_Motel_Criteria_MotelRoom">
+          <AssociationSet Name="FK_MotelCriteria_MotelRoom" Association="Self.FK_MotelCriteria_MotelRoom">
             <End Role="MotelRoom" EntitySet="MotelRoom" />
-            <End Role="Motel_Criteria" EntitySet="Motel_Criteria" />
+            <End Role="MotelCriteria" EntitySet="MotelCriteria" />
           </AssociationSet>
           <AssociationSet Name="FK_MotelRoom_Account" Association="Self.FK_MotelRoom_Account">
             <End Role="Account" EntitySet="Account" />
@@ -561,7 +561,7 @@
           </Key>
           <Property Name="CriteriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CriteriaName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MotelRooms" Relationship="Self.Motel_Criteria" FromRole="Criteria" ToRole="MotelRoom" />
+          <NavigationProperty Name="MotelRooms" Relationship="Self.MotelCriteria" FromRole="Criteria" ToRole="MotelRoom" />
         </EntityType>
         <EntityType Name="District">
           <Key>
@@ -625,7 +625,7 @@
           <NavigationProperty Name="Ward" Relationship="Self.FK_MotelRoom_Ward" FromRole="MotelRoom" ToRole="Ward" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Post_MotelRoom" FromRole="MotelRoom" ToRole="Post" />
           <NavigationProperty Name="Renters" Relationship="Self.FK_Renter_MotelRoom" FromRole="MotelRoom" ToRole="Renter" />
-          <NavigationProperty Name="Criteria" Relationship="Self.Motel_Criteria" FromRole="MotelRoom" ToRole="Criteria" />
+          <NavigationProperty Name="Criteria" Relationship="Self.MotelCriteria" FromRole="MotelRoom" ToRole="Criteria" />
         </EntityType>
         <EntityType Name="MotelStatu">
           <Key>
@@ -896,7 +896,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Motel_Criteria">
+        <Association Name="MotelCriteria">
           <End Role="Criteria" Type="Self.Criterion" Multiplicity="*" />
           <End Role="MotelRoom" Type="Self.MotelRoom" Multiplicity="*" />
         </Association>
@@ -980,7 +980,7 @@
             <End Role="MotelRoom" EntitySet="MotelRooms" />
             <End Role="Renter" EntitySet="Renters" />
           </AssociationSet>
-          <AssociationSet Name="Motel_Criteria" Association="Self.Motel_Criteria">
+          <AssociationSet Name="MotelCriteria" Association="Self.MotelCriteria">
             <End Role="Criteria" EntitySet="Criteria" />
             <End Role="MotelRoom" EntitySet="MotelRooms" />
           </AssociationSet>
@@ -1159,7 +1159,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Motel_Criteria" TypeName="QLTroModel.Motel_Criteria" StoreEntitySet="Motel_Criteria">
+          <AssociationSetMapping Name="MotelCriteria" TypeName="QLTroModel.MotelCriteria" StoreEntitySet="MotelCriteria">
             <EndProperty Name="Criteria">
               <ScalarProperty Name="CriteriaID" ColumnName="CriteriaID" />
             </EndProperty>

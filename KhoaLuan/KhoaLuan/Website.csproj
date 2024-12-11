@@ -144,64 +144,64 @@
     <Compile Include="Helpers\MailHelper.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Models\Account.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccStatu.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Bill.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BillDetail.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfirmEmail.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Criterion.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\District.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Image.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Info.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MotelRoom.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MotelStatu.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Province.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\QLTro.Context.cs">
+    <Compile Include="Models\QLTroEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>QLTro.Context.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\QLTro.cs">
+    <Compile Include="Models\QLTroEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\QLTro.Designer.cs">
+    <Compile Include="Models\QLTroEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>QLTro.edmx</DependentUpon>
+      <DependentUpon>QLTroEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Renter.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ward.cs">
-      <DependentUpon>QLTro.tt</DependentUpon>
+      <DependentUpon>QLTroEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AccountManagerModel.cs" />
@@ -747,15 +747,15 @@
     <Content Include="Content\Theme\scss\_responsive.scss" />
     <Content Include="Content\Theme\scss\_theme_color.scss" />
     <Content Include="Content\Theme\style.css.map" />
-    <Content Include="Models\QLTro.Context.tt">
+    <Content Include="Models\QLTroEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>QLTro.edmx</DependentUpon>
-      <LastGenOutput>QLTro.Context.cs</LastGenOutput>
+      <DependentUpon>QLTroEntities.edmx</DependentUpon>
+      <LastGenOutput>QLTroEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\QLTro.tt">
+    <Content Include="Models\QLTroEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>QLTro.edmx</DependentUpon>
-      <LastGenOutput>QLTro.cs</LastGenOutput>
+      <DependentUpon>QLTroEntities.edmx</DependentUpon>
+      <LastGenOutput>QLTroEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Bootstrap\popper.min.js" />
@@ -829,12 +829,12 @@
     <Content Include="Content\Admin\vendor\jquery.cookie\component.json" />
     <Content Include="Content\Admin\vendor\jquery.cookie\cookie.jquery.json" />
     <Content Include="Content\Admin\vendor\popper.js\umd\poppper.js.flow" />
-    <EntityDeploy Include="Models\QLTro.edmx">
+    <EntityDeploy Include="Models\QLTroEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>QLTro.Designer.cs</LastGenOutput>
+      <LastGenOutput>QLTroEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\QLTro.edmx.diagram">
-      <DependentUpon>QLTro.edmx</DependentUpon>
+    <Content Include="Models\QLTroEntities.edmx.diagram">
+      <DependentUpon>QLTroEntities.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <Content Include="Views\Shared\_LoginModal.cshtml" />

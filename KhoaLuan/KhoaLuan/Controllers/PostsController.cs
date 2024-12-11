@@ -33,33 +33,33 @@ namespace KhoaLuan.Controllers
             }
         }
         [HttpPost]
-        public ActionResult SearchResult(FormCollection data, string pageNumber, string order)
+        public ActionResult SearchResult(FormCollection form, string pageNumber, string order)
         {
             var listCriteria = db.Criteria.ToList();
             var listPosts = new List<PostViewModel>();
             var listResult = new List<PostViewModel>();
             var listSearchAdvange = new List<PostViewModel>();
 
-            if (data == null) return View(listResult);
-            var lastSearch = Session["searchData"] as FormCollection;
+            if (form == null) return View(listResult);
+            var lastSearch = Session["searchform"] as FormCollection;
 
-            int provinceID = Convert.ToInt32(data["province"]);
+            int provinceID = Convert.ToInt32(form["province"]);
             if (provinceID == 0)
             {
                 provinceID = Convert.ToInt32(lastSearch["province"]);
-                data["province"] = lastSearch["province"];
+                form["province"] = lastSearch["province"];
             }
-            int districtID = Convert.ToInt32(data["district"]);
+            int districtID = Convert.ToInt32(form["district"]);
             if (districtID == 0)
             {
                 districtID = Convert.ToInt32(lastSearch["district"]);
-                data["district"] = lastSearch["district"];
+                form["district"] = lastSearch["district"];
             }
 
-            string isSearchAdvance = data["isSearchAdvance"];
-            int maxPeople = Convert.ToInt32(data["maxPeople"]);
+            string isSearchAdvance = form["isSearchAdvance"];
+            int maxPeople = Convert.ToInt32(form["maxPeople"]);
 
-            Session["searchData"] = data;
+            Session["searchform"] = form;
 
             Response.Cookies["provinceId"].Value = provinceID.ToString();
             Response.Cookies["townshipId"].Value = districtID.ToString();
@@ -75,20 +75,39 @@ namespace KhoaLuan.Controllers
                 ViewBag.district = db.Districts.Where(p => p.DistrictID == districtID).First().DistrictName;
             }
             // Get all post
-            listPosts = PostViewModel.CreateListPostViewModel(provinceID, districtID, maxPeople);
+            List<int> lstIdPostWithCriteria = new List<int>();
+            if (!string.IsNullOrEmpty(form["criteria[]"]))
+            {
+                var criteriaList = new List<int>();
+                criteriaList = form["criteria[]"].Split(',')
+                                               .Select(int.Parse)
+                                               .ToList();
+                lstIdPostWithCriteria = db.MotelRooms
+                .Where(x => criteriaList.All(cId => x.Criteria.Any(c => c.CriteriaID == cId)))
+                .Select(x => x.MotelID)
+                .Distinct()
+                .ToList();
+                Session["criteria"] = form["criteria[]"];
+                listPosts = PostViewModel.CreateListPostViewModel(provinceID, districtID, maxPeople, lstIdPostWithCriteria);
+            }
+            else
+            {
+                listPosts = PostViewModel.CreateListPostViewModel(provinceID, districtID, maxPeople);
+            }
+
             listResult = listPosts.Where(p => p.Post.PostStatus == true && p.Post.AccountStatus == 1).ToList();
             if (isSearchAdvance != null)
             {
-                long price = long.Parse(data["price"]);
-                long area = long.Parse(data["area"]);
+                long price = long.Parse(form["price"]);
+                long area = long.Parse(form["area"]);
                 var listCriteriaID = new List<int>();
                 listPosts = listResult.Where(p => p.Post.Price <= price && p.Post.Acreage <= area).ToList();
                 listResult = listPosts;
                 foreach (var item in listCriteria)
                 {
-                    if (data["criteria" + item.CriteriaID] != null)
+                    if (form["criteria" + item.CriteriaID] != null)
                     {
-                        var criID = Int32.Parse(data["criteria" + item.CriteriaID]);
+                        var criID = Int32.Parse(form["criteria" + item.CriteriaID]);
                         listCriteriaID.Add(criID);
                     }
                 }

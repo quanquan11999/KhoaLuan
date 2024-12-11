@@ -430,12 +430,12 @@ namespace KhoaLuan.Controllers
 			house.Acreage = acreage;
 			house.Price = CurrencyHelper.CurrencyToNumber(data["price"], '.');
 			house.ProvinceID = provinceID;
-			house.DistrictID = districtID;
+			//house.DistrictID = districtID;
 			house.MaxPeople = maxPeople;
 			house.StatusID = 1;
-			house.AccountID = (Session["account"] as Account).AccountID;
+			//house.AccountID = (Session["account"] as Account).AccountID;
 			house.Address = (data["addressRoom"]).ToString();
-			house.Criteria = listCriteria;
+			//house.Criteria = listCriteria;
 			house.WardID = wardID;
 			db.MotelRooms.Add(house);
 			db.SaveChanges();

@@ -78,9 +78,36 @@
                         <label for="maxPeople">Số người tối đa:</label>
                         <input type="number" id="maxPeople" name="maxPeople" class="form-control"
                                value="@(ViewBag.MaxPeople ?? 0)" />
-                    </div>     
+                    </div>
+
+                    <div>
+                        <div class="form-group">
+                            @{
+                                var db = new KhoaLuan.Models.QLTroEntities();
+                                var listCriteria = db.Criteria.ToList();
+                                var selectedCriteria = new List<int>();
+                                if (Session["criteria"] != null)
+                                {
+                                    selectedCriteria = Session["criteria"].ToString().Split(',').Select(int.Parse).ToList() ?? new List<int>();
+                                }
+
+                                foreach (var item in listCriteria)
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="criteria[]" id="criteria_@item.CriteriaID" value="@item.CriteriaID"
+                                                @(selectedCriteria.Contains(item.CriteriaID) ? "checked" : "")>
+                                        <label class="form-check-label" for="criteria_@item.CriteriaID">
+                                            @item.CriteriaName
+                                        </label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary mt-2">Lọc</button>
                 }
+                <br />
                 @if ((Model == null) || (Model.Count() == 0))
                 {
                     <div class="alert-warning p-3 mb-5 d-flex">
