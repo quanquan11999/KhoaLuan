@@ -12,14 +12,14 @@
     verification = $('#verification'),
     submitted = false;
 
-function validateData() {
+function validateData(s) {
     var validAccountId = validateAccountId();
     var validPassword = validatePassword();
     var validRePassword = validateRePassword();
     var validName = validateName();
     var validBirthDate = validateBirthDate();
     var validPhone = validatePhone();
-    var validEmail = validateEmail();
+    var validEmail = validateEmail(s);
     var validSex = validateSex();
     var validRole = validateRole();
     var validCity = validateCity();
@@ -73,7 +73,7 @@ function validateAccountId() {
     
     return true;
 }
-accountId.keyup(function () { validateAccountId(); });
+accountId.focusout(function () { validateAccountId(); });
 
 function validatePassword() {
     if (password.val().length <= 0) {
@@ -144,12 +144,12 @@ function validatePhone() {
 }
 phone.focusout(function () { validatePhone(); });
 
-function validateEmail() {
+function validateEmail(s) {
     if (email.val().length <= 0) {
         showMessage(email);
         return false;
     }
-    else if (emailExist(email.val())) {
+    else if (emailExist(email.val(),s)) {
         $('#emailExits').css({ 'display':'block' });
         $('#emailExits').css({ 'visibility': 'visible' });
         $('#emailErrorMessage').css({ 'display': 'none' });
@@ -259,8 +259,12 @@ function Clock() {
     }, 1000);
 };
 
-function emailExist(email) {
-    var flag;
+function emailExist(email,s) {
+    let flag;
+    if (s) {
+        flag = false;
+        return flag;
+    }
     $.ajax({
         async: false,
         type: "POST",

@@ -1,88 +1,88 @@
 ﻿<!-- ##### Login Modal ##### -->
 <div class="modal fade" id="loginModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-	<form action="/Account/Login" method="post" id="loginForm" onsubmit="return validateLogin()">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header" style="padding-left: 30px; padding-right: 30px">
-					<h5 class="modal-title my-text-primary">Đăng nhập</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true" class="text-dark">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="container-fluid">
-						<div class="form-group" style="position: relative;">
-							<label for="userInput" id="userInputLabel" class="my-form-label-control">Tên tài khoản <span style="color: red">*</span></label>
-							<input type="text" id="userInput" name="userInput" class="my-form-input-control">
-							<div class="my-place-bottom-line"></div>
-							<div class="my-bottom-line-left userInputLine"></div>
-							<div class="my-bottom-line-right userInputLine"></div>
-							<div class="pt-2"><span class="error-message pl-0" id="error-user"></span></div>
-						</div>
+    <form action="/Account/Login" method="post" id="loginForm" onsubmit="return validateLogin()">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-left: 30px; padding-right: 30px">
+                    <h5 class="modal-title my-text-primary">Đăng nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-dark">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="form-group" style="position: relative;">
+                            <label for="userInput" id="userInputLabel" class="my-form-label-control">Tên tài khoản <span style="color: red">*</span></label>
+                            <input type="text" id="userInput" name="userInput" class="my-form-input-control">
+                            <div class="my-place-bottom-line"></div>
+                            <div class="my-bottom-line-left userInputLine"></div>
+                            <div class="my-bottom-line-right userInputLine"></div>
+                            <div class="pt-2"><span class="error-message pl-0" id="error-user"></span></div>
+                        </div>
 
-						<div class="form-group mt-5" style="position: relative;">
-							<label for="passwordInput" id="passwordInputLabel" class="my-form-label-control">Mật khẩu<span style="color: red">*</span></label>
-							<input type="password" id="passwordInput" name="passwordInput" class="my-form-input-control">
-							<div class="my-place-bottom-line"></div>
-							<div class="my-bottom-line-left passwordInputLine"></div>
-							<div class="my-bottom-line-right passwordInputLine"></div>
-							<div class="pt-2"><span class="error-message pl-0" id="error-pass"></span></div>
-						</div>
+                        <div class="form-group mt-5" style="position: relative;">
+                            <label for="passwordInput" id="passwordInputLabel" class="my-form-label-control">Mật khẩu<span style="color: red">*</span></label>
+                            <input type="password" id="passwordInput" name="passwordInput" class="my-form-input-control">
+                            <div class="my-place-bottom-line"></div>
+                            <div class="my-bottom-line-left passwordInputLine"></div>
+                            <div class="my-bottom-line-right passwordInputLine"></div>
+                            <div class="pt-2"><span class="error-message pl-0" id="error-pass"></span></div>
+                        </div>
 
-						<div class="form-group mt-3">
-							<span class="error-message pl-0" id="error-account-not-found"></span>
-						</div>
-					</div>
-				</div>
+                        <div class="form-group mt-3">
+                            <span class="error-message pl-0" id="error-account-not-found"></span>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="modal-footer d-block text-center" style="padding-left: 30px; padding-right: 30px;">
-					<input id="submitLogin" type="submit" class="btn btn-sm my-btn-primary w-100" value="Đăng nhập">
-					<br>
-					<br>
-					<div class="row">
-						<div class="col-sm-12 col-md-6 pl-0" style="text-align: left;">
-							
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+                <div class="modal-footer d-block text-center" style="padding-left: 30px; padding-right: 30px;">
+                    <input id="submitLogin" type="submit" class="btn btn-sm my-btn-primary w-100" value="Đăng nhập">
+                    <br>
+                    <br>
+                    <button id="showSignUpModal" class="btn btn-sm my-btn-primary w-100 ml-0">Đăng Ký</button>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 pl-0" style="text-align: left;">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 <!-- ##### End Login Modal ##### -->
-
 <!-- ##### Reset Password Modal ##### -->
 <div style="margin-top: 5%; width: 450px; margin: auto" class="modal fade" id="resetPasswordModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-	<form action="#" onsubmit="return false" method="post">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header" style="padding-left: 30px; padding-right: 30px">
-		
-					<button id="closeResetPasswordModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true" class="text-dark">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="container-fluid">
-						<div id="noficationResetPass" style="display: none">Mật khẩu mới đã được gửi vào tài khoản email: <span id="email-receive"></span></div>
-						<div id="contentTitle">Vui lòng cung cấp tên tài khoản để lấy lại mật khẩu.</div>
-						<br />
-						<div class="form-group" style="position: relative;" id="inputUserNameLogin">
-							<label for="userInput" class="my-form-label-control">Tên tài khoản <span style="color: red">*</span></label>
-							<input type="text" id="userNameResetPassword" name="userNameResetPassword" class="my-form-input-control">
-							<div class="my-place-bottom-line"></div>
-							<div class="my-bottom-line-left userInputLine"></div>
-							<div class="my-bottom-line-right userInputLine"></div>
-							<div class="pt-2"><span class="error-message pl-0" id="error-user"></span></div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer d-block text-center" style="padding-left: 30px; padding-right: 30px;">
-					<input id="resetPass" type="button" class="btn btn-sm my-btn-primary w-100" value="Lấy lại mật khẩu">
-				</div>
-			</div>
-		</div>
-	</form>
+    <form action="#" onsubmit="return false" method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-left: 30px; padding-right: 30px">
+
+                    <button id="closeResetPasswordModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-dark">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div id="noficationResetPass" style="display: none">Mật khẩu mới đã được gửi vào tài khoản email: <span id="email-receive"></span></div>
+                        <div id="contentTitle">Vui lòng cung cấp tên tài khoản để lấy lại mật khẩu.</div>
+                        <br />
+                        <div class="form-group" style="position: relative;" id="inputUserNameLogin">
+                            <label for="userInput" class="my-form-label-control">Tên tài khoản <span style="color: red">*</span></label>
+                            <input type="text" id="userNameResetPassword" name="userNameResetPassword" class="my-form-input-control">
+                            <div class="my-place-bottom-line"></div>
+                            <div class="my-bottom-line-left userInputLine"></div>
+                            <div class="my-bottom-line-right userInputLine"></div>
+                            <div class="pt-2"><span class="error-message pl-0" id="error-user"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-block text-center" style="padding-left: 30px; padding-right: 30px;">
+                    <input id="resetPass" type="button" class="btn btn-sm my-btn-primary w-100" value="Lấy lại mật khẩu">
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 <!-- ##### End Login Modal ##### -->

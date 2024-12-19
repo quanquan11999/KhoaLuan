@@ -298,28 +298,37 @@ namespace KhoaLuan.Controllers
 		[HttpPost]
 		public ActionResult CheckVerfiticationCode(string email, string code)
 		{
-			var timeCurrent = DateTime.Now.TimeOfDay;
-			using (var db = new QLTroEntities())
+			try
 			{
-				var ec = db.ConfirmEmails.SingleOrDefault(p => p.Email.Equals(email));
-				var t = timeCurrent.TotalSeconds - ec.Time.Value.TotalSeconds;
-				var verfiticationCode = ec.VerificationCode;
-				if (t > 900)
-				{
-					return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-				}
-				else
-				{
-					if (verfiticationCode.Equals(code))
-					{
-						return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-					}
-					else
-					{
-						return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-					}
-				}
-			}
+                var timeCurrent = DateTime.Now.TimeOfDay;
+                using (var db = new QLTroEntities())
+                {
+                    var ec = db.ConfirmEmails.SingleOrDefault(p => p.Email.Equals(email));
+                    var t = timeCurrent.TotalSeconds - ec.Time.Value.TotalSeconds;
+                    var verfiticationCode = ec.VerificationCode;
+                    if (t > 900)
+                    {
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        if (verfiticationCode.Equals(code))
+                        {
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                }
+            }
+			catch (Exception)
+			{
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
+            }
+			
 		}
 
 		[HttpPost]
