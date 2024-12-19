@@ -162,7 +162,7 @@ function validateEmail(s) {
     hideMessage(email);
     return true;
 }
-email.focusout(function () { validateEmail(); });
+//email.focusout(function () { validateEmail(); });
 
 function validateSex() {
     if (sex.val() === '-1') {
