@@ -32,11 +32,11 @@ namespace KhoaLuan.Controllers
 			var password = data["password"];
 			var userName = data["userName"];
 			DateTime birthDate = DateTime.Parse(data["birthDate"]);
-			var address = data["address"];
+			//var address = data["address"];
 			var phone = data["phone"];
 			var email = data["email"];
-			var city = data["city"];
-			var district = data["district"];
+			var city = data["city1"];
+			var district = data["district1"];
 			bool sex = true;
 			if (data["sex"].Equals("1"))
 			{
@@ -58,7 +58,10 @@ namespace KhoaLuan.Controllers
 			using (var db = new QLTroEntities())
 			{
 				db.Accounts.Add(new Account() { AccountID = accountId, AccountStatusID = 1, Password = password, Role = role });
-				db.Infoes.Add(new Info() { AccountID = accountId, Name = userName, Sex = sex, Birthday = birthDate, Phone = phone, Email = email, ProvinceID = Int32.Parse(city), DistrictID = Int32.Parse(district) });
+				db.Infoes.Add(new Info() { 
+					AccountID = accountId, Name = userName, Sex = sex, Birthday = birthDate, Phone = phone, Email = email, 
+					ProvinceID = Int32.Parse(city), DistrictID = Int32.Parse(district)
+				});
 				db.SaveChanges();
 			}
 			return RedirectToAction("Index", "Home");

@@ -214,6 +214,7 @@
     <Compile Include="ViewModels\RoomDetailsModel.cs" />
     <Compile Include="ViewModels\RoomModel.cs" />
     <Compile Include="ViewModels\SearchResult.cs" />
+    <Compile Include="ViewModels\StatisticsModel.cs" />
     <Compile Include="ViewModels\UploadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -863,6 +864,7 @@
     <Content Include="Views\Shared\_ModalFeedBackDeleteAccount.cshtml" />
     <Content Include="Views\User\AddRoom.cshtml" />
     <Content Include="Views\User\RoomDetails.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

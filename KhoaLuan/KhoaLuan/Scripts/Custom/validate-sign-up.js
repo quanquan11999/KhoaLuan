@@ -212,12 +212,12 @@ district.focusout(function () { validateDistrict(); });
 function validateVerification() {
     hideMessage(verification);
     $('#errorMess').html(" Phải nhập mã xác nhận được gửi trong email.");
-    var verificationCode = verification.val();
+    let verificationCode = verification.val();
     if (verificationCode == "") {
         showMessage(verification);
         return false;
     } else {
-        var x = checkVerificationCode(email.val(), verificationCode);
+        let x = checkVerificationCode(email.val(), verificationCode);
         if (x) {
             return true;
         } else {
@@ -229,7 +229,7 @@ function validateVerification() {
     hideMessage(verification);
     return true;
 }
-verification.focusout(function () { validateVerification(); });
+//verification.focusout(function () { validateVerification(); });
 
 $(document).ready(function () {
     $('#sendVerification').click(function () {

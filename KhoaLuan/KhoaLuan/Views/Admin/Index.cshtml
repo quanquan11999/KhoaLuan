@@ -1,0 +1,109 @@
+﻿@model KhoaLuan.ViewModels.StatisticsModel
+@using Newtonsoft.Json;
+
+@{
+    ViewBag.Title = "Thống kê";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    .card {
+        transition: transform 0.2s;
+    }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+</style>
+
+<div class="container mt-5">
+    <h1 class="text-center">Thống Kê Phòng Trọ</h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Thống Kê Bài Đăng</h5>
+                    <p class="card-text">Số bài đăng: <strong>@Model.TotalPost</strong></p>
+                    <p class="card-text">Theo tháng: <strong>@Model.AmountPostByMonth</strong></p>
+                    <p class="card-text">Theo năm: <strong>@Model.AmountPostByYear</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Doanh Thu</h5>
+                    <p class="card-text">Doanh thu hôm nay: <strong>@Model.RevenueByDay.ToString("N0") VND</strong></p>
+                    <p class="card-text">Doanh thu tháng này: <strong>@Model.RevenueByMonth.ToString("N0") VND</strong></p>
+                    <p class="card-text">Doanh thu năm nay: <strong>@Model.RevenueByYear.ToString("N0") VND</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Số Phòng Hiện Có</h5>
+                    <p class="card-text">Số phòng: <strong>@Model.TotalFreeRoom</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form action="/Admin/Index" method="GET">
+                        <h5 class="card-title">Thống Kê Theo Giai Đoạn</h5>
+                        <div class="mb-2">
+                            <label for="startDate" class="form-label">Ngày bắt đầu</label>
+                            <input type="date" id="startDate" name="startDate" class="form-control" placeholder="Ngày bắt đầu" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="endDate" class="form-label">Ngày kết thúc</label>
+                            <input type="date" id="endDate" name="endDate" class="form-control" placeholder="Ngày kết thúc" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Xem Thống Kê</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Biểu Đồ Doanh Thu</h5>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="@("https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js")"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+        // Biểu đồ doanh thu
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(JsonConvert.SerializeObject(Model.RevenueStatisic.Select(r => r.Day))), // ['Ngày 1', 'Ngày 2', 'Ngày 3', 'Ngày 4', 'Ngày 5'],
+                datasets: [{
+                    label: 'Doanh Thu (VND)',
+                    data:@Html.Raw(JsonConvert.SerializeObject(Model.RevenueStatisic.Select(r => r.Value))),// [1500000, 2000000, 2500000, 3000000, 3500000],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+</script>
+
