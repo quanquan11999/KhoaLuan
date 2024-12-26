@@ -84,17 +84,13 @@ namespace KhoaLuan.Controllers
 					Session["districtName"] = districtName;
 				}
 			}
-			if (account.Role == 0)
+            if (account.Role == 2)
+            {
+                return RedirectToAction("ChangeInfo", "Account");
+            }
+            else
 			{
-				return RedirectToAction("AllAccount", controllerName: "Admin");
-			}
-			else if (account.Role == 1)
-			{
-				return RedirectToAction("AllPost", "User");
-			}
-			else
-			{
-				return RedirectToAction("ChangeInfo", "Account");
+				return RedirectToAction("Index", "Admin");
 			}
 		}
 		[HttpGet]

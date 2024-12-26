@@ -36,7 +36,7 @@ namespace KhoaLuan.Controllers
         public ActionResult SearchResult(FormCollection form, string pageNumber, string order)
         {
             var listCriteria = db.Criteria.ToList();
-            var listPosts = new List<PostViewModel>();
+            List<PostViewModel> listPosts;
             var listResult = new List<PostViewModel>();
             var listSearchAdvange = new List<PostViewModel>();
 
@@ -55,6 +55,8 @@ namespace KhoaLuan.Controllers
                 districtID = Convert.ToInt32(lastSearch["district"]);
                 form["district"] = lastSearch["district"];
             }
+            string searchKey = form["searchKey"] ?? "";
+            Session["searchKey"] = searchKey;
 
             string isSearchAdvance = form["isSearchAdvance"];
             int maxPeople = Convert.ToInt32(form["maxPeople"]);
@@ -75,7 +77,7 @@ namespace KhoaLuan.Controllers
                 ViewBag.district = db.Districts.Where(p => p.DistrictID == districtID).First().DistrictName;
             }
             // Get all post
-            List<int> lstIdPostWithCriteria = new List<int>();
+            List<int> lstIdPostWithCriteria;
             if (!string.IsNullOrEmpty(form["criteria[]"]))
             {
                 var criteriaList = new List<int>();
@@ -88,11 +90,13 @@ namespace KhoaLuan.Controllers
                 .Distinct()
                 .ToList();
                 Session["criteria"] = form["criteria[]"];
-                listPosts = PostViewModel.CreateListPostViewModel(provinceID, districtID, maxPeople, lstIdPostWithCriteria);
+                listPosts = PostViewModel.CreateListPostViewModel(
+                    provinceID, districtID, maxPeople, lstIdPostWithCriteria, searchKey);
             }
             else
             {
-                listPosts = PostViewModel.CreateListPostViewModel(provinceID, districtID, maxPeople);
+                listPosts = PostViewModel.CreateListPostViewModel(
+                    provinceID, districtID, maxPeople, searchKey);
             }
 
             listResult = listPosts.Where(p => p.Post.PostStatus == true && p.Post.AccountStatus == 1).ToList();
@@ -114,7 +118,7 @@ namespace KhoaLuan.Controllers
                 foreach (var item in listResult)
                 {
                     var list = listCriteriaID.Except(item.Post.ListCriteriaID);
-                    if (list.Count() == 0)
+                    if (!list.Any())
                     {
                         listSearchAdvange.Add(item);
                     }

@@ -34,14 +34,17 @@ namespace KhoaLuan.ViewModels
             return list;
         }
 
-        public static List<PostViewModel> CreateListPostViewModel(int provinceID, int districtID, int maxPeople)
+        public static List<PostViewModel> CreateListPostViewModel(int provinceID, int districtID, int maxPeople, string searchKey)
         {
             List<PostViewModel> list = new List<PostViewModel>();
             using (var db = new QLTroEntities())
             {
                 var searchResult = SearchResult.CreateListSearchResult()
                     .Where(p => p.ProvinceID == provinceID && p.DistrictID == districtID
-                    && p.AccountStatus == 1 && p.PostStatus == true)
+                    && p.AccountStatus == 1 && p.PostStatus == true
+                    && (p.Name.Contains(searchKey) || p.PostTitle.Contains(searchKey) || p.DistrictName.Contains(searchKey) || 
+                    p.Description.Contains(searchKey) || p.WardName.Contains(searchKey) || p.ProvinceName.Contains(searchKey))
+                    )
                     .ToList();
                 if (maxPeople > 0)
                 {
@@ -62,14 +65,17 @@ namespace KhoaLuan.ViewModels
             return list;
         }
 
-        public static List<PostViewModel> CreateListPostViewModel(int provinceID, int districtID, int maxPeople, List<int> lstIdPostWithCriteria)
+        public static List<PostViewModel> CreateListPostViewModel(int provinceID, int districtID, int maxPeople, List<int> lstIdPostWithCriteria, string searchKey)
         {
             List<PostViewModel> list = new List<PostViewModel>();
             using (var db = new QLTroEntities())
             {
                 var searchResult = SearchResult.CreateListSearchResult()
                     .Where(p => p.ProvinceID == provinceID && p.DistrictID == districtID
-                    && p.AccountStatus == 1 && p.PostStatus == true)
+                    && p.AccountStatus == 1 && p.PostStatus == true
+                    && (p.Name.Contains(searchKey) ||  p.PostTitle.Contains(searchKey) || p.DistrictName.Contains(searchKey) ||
+                    p.Description.Contains(searchKey) || p.WardName.Contains(searchKey) || p.ProvinceName.Contains(searchKey))
+                    )
                     .ToList();
                 if (maxPeople > 0)
                 {

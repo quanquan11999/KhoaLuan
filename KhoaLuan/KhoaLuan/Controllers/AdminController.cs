@@ -13,7 +13,7 @@ namespace KhoaLuan.Controllers
 {
     public class AdminController : Controller
     {
-        QLTroEntities db = new QLTroEntities();
+        readonly QLTroEntities db = new QLTroEntities();
         private readonly int pageSize = 8;
 
         public void FeedbackForUserByMail(string subject, string note, string email)
@@ -72,7 +72,7 @@ namespace KhoaLuan.Controllers
                             .Select(x => new Revenue()
                             {
                                 Day = x.Key.ToString("dd/MM/yyyy"),
-                                Value = x.Select(y => (long)y.WaterPrice + (long)y.ElectricityPrice + (long)y.InternetPrice + (long)y.RoomRates).Sum()
+                                Value = x.Select(y => (y.WaterPrice ?? 0) + (y.ElectricityPrice ?? 0) + (y.InternetPrice ?? 0) + (y.RoomRates ?? 0)).Sum()
                             }).ToList();
                     }
                 }
